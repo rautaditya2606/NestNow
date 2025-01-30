@@ -1,0 +1,217 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container my-5  ">
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-transparent mb-4">
+      <li class="breadcrumb-item"><a href="/listings" class="text-decoration-none">Listings</a></li>
+      <li class="breadcrumb-item active">Add New Nest</li>
+    </ol>
+  </nav>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10  ">
+      <div class="card shadow-luxury border-luxury">
+        <div class="card-body p-4 p-md-5">
+          <h2 class="card-title text-center mb-4">✨ Create Your Luxury Nest</h2>
+          
+          <form method="POST" action="/listings" class="needs-validation" novalidate enctype="multipart/form-data" >
+            <div class="mb-4">
+              <label for="title" class="form-label">
+                <i class="fas fa-crown me-2 text-luxury"></i>Title
+              </label>
+              <input type="text" 
+                     id="title" 
+                     name="listing[title]" 
+                     class="form-control form-control-lg" 
+                     placeholder="Enter a captivating title"
+                     required>
+              <div class="valid-feedback"><i class="fas fa-check-circle"></i> Perfect title!</div>
+              <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Please enter a title.</div>
+            </div>
+
+            <div class="mb-4">
+              <label for="description" class="form-label">
+                <i class="fas fa-feather-alt me-2 text-luxury"></i>Description
+              </label>
+              <textarea id="description" 
+                        name="listing[description]" 
+                        class="form-control form-control-lg" 
+                        rows="4"
+                        placeholder="Describe your luxury property"
+                        required></textarea>
+              <div class="valid-feedback"><i class="fas fa-check-circle"></i> Excellent description!</div>
+              <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Please add a description.</div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-6 mb-3 mb-md-0">
+                <label for="price" class="form-label">
+                  <i class="fas fa-tag me-2 text-luxury"></i>Price
+                </label>
+                <div class="input-group">
+                  <span class="input-group-text bg-luxury text-white">$</span>
+                  <input type="number" 
+                         id="price" 
+                         name="listing[price]" 
+                         class="form-control form-control-lg"
+                         placeholder="0.00"
+                         required>
+                </div>
+                <div class="valid-feedback"><i class="fas fa-check-circle"></i> Price set!</div>
+                <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Please set a price.</div>
+              </div>
+              <div class="col-md-6">
+                <label for="image" class="form-label">
+                  <i class="fas fa-image me-2 text-luxury"></i>Upload Image
+                </label>
+                <input type="file" 
+                       id="image" 
+                       name="image" 
+                       class="form-control form-control-lg"
+                       accept="image/*"
+                       required>
+                      <div class="mt-2">
+                        <button type="button" 
+                                class="btn btn-outline-luxury" 
+                                onclick="previewImage()">
+                          <i class="fas fa-eye me-1"></i>Preview
+                        </button>
+                      </div>
+                <div class="valid-feedback"><i class="fas fa-check-circle"></i> Image looks perfect!</div>
+                <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Please add an image.</div>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-md-6 mb-3 mb-md-0">
+                <label for="location" class="form-label">
+                  <i class="fas fa-map-marker-alt me-2 text-luxury"></i>Location
+                </label>
+                <input type="text" 
+                       id="location" 
+                       name="listing[location]" 
+                       class="form-control form-control-lg"
+                       placeholder="City, State"
+                       required>
+                <div class="valid-feedback"><i class="fas fa-check-circle"></i> Location looks good!</div>
+                <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Please specify location.</div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="country" class="form-label">
+                  <i class="fas fa-globe-americas me-2 text-luxury"></i>Country
+                </label>
+                <input type="text" 
+                       id="country" 
+                       name="listing[country]" 
+                       class="form-control form-control-lg"
+                       placeholder="Country"
+                       required>
+                <div class="valid-feedback"><i class="fas fa-check-circle"></i> Perfect!</div>
+                <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Please specify country.</div>
+              </div>
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+              <a href="/listings" class="btn btn-outline-secondary me-md-2">Cancel</a>
+              <button type="submit" class="btn btn-luxury px-4 py-2">
+                <i class="fas fa-plus-circle me-2"></i>Create Listing
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Form validation
+  const form = document.querySelector('.needs-validation');
+  
+  form.addEventListener('submit', function(event) {
+    if (!form.checkValidity()) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    form.classList.add('was-validated');
+  });
+
+  // Price input formatting and validation
+  const priceInput = document.getElementById('price');
+  priceInput.addEventListener('input', function(e) {
+    let value = e.target.value.replace(/[^0-9.]/g, '');
+    const decimalCount = (value.match(/\./g) || []).length;
+    if (decimalCount > 1) {
+      value = value.substr(0, value.lastIndexOf('.'));
+    }
+    if (value.includes('.')) {
+      const parts = value.split('.');
+      value = parts[0] + '.' + parts[1].substr(0, 2);
+    }
+    e.target.value = value;
+  });
+
+  // Image preview functionality - Fixed version
+  window.previewImage = function() {
+    const fileInput = document.getElementById('image');
+    const file = fileInput.files[0];
+    
+    if (file) {
+      // First remove any existing preview modal
+      const existingModal = document.getElementById('imagePreviewModal');
+      if (existingModal) {
+        existingModal.remove();
+      }
+
+      // Create and append the modal HTML
+      const modalHTML = `
+        <div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Image Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body p-0">
+                <img src="${URL.createObjectURL(file)}" class="img-fluid w-100" alt="Preview">
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      document.body.insertAdjacentHTML('beforeend', modalHTML);
+      
+      // Initialize and show the modal
+      const previewModal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
+      previewModal.show();
+      
+      // Clean up the URL and remove modal when hidden
+      document.getElementById('imagePreviewModal').addEventListener('hidden.bs.modal', function() {
+        URL.revokeObjectURL(this.querySelector('img').src);
+        this.remove();
+      });
+    } else {
+      alert('Please select an image file first');
+    }
+  };
+
+  // File input validation
+  const imageInput = document.getElementById('image');
+  imageInput.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    
+    if (file) {
+      if (!allowedTypes.includes(file.type)) {
+        alert('Please upload only JPG, PNG, or WebP images.');
+        e.target.value = '';
+        return;
+      }
+    }
+  });
+});
+</script>

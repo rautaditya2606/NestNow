@@ -1,0 +1,152 @@
+require("dotenv").config();
+if(process.env.NODE_ENV != "production"){
+  require('dotenv').config();
+};
+
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
+const port = 8080;
+const methodOverride = require("method-override");
+const Listing = require("./models/listing.js");
+// const Mongo_URL = "mongodb://127.0.0.1:27017/nestnow";
+const path = require("path");
+const ejsMate = require("ejs-mate");
+const Review = require("./models/review.js");
+const listingRouter = require("./router/listings.js");
+const reviewRouter = require("./router/review.js");
+const userRouter = require("./router/user.js");
+const session = require("express-session");
+const mongoStore = require("connect-mongo");
+const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user");
+const { isLoggedIn ,isOwner } = require("./middleware.js");
+const MongoStore = require("connect-mongo");
+const dburl = process.env.ATLASDB_URL;
+
+
+
+
+// Middleware
+app.use(methodOverride("_method"));
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+app.use(express.urlencoded({ extended: true }));
+app.engine("ejs", ejsMate);
+app.use(express.static(path.join(__dirname, "/public")));
+
+//mongo session store
+const store = MongoStore.create({
+  mongoUrl: dburl,
+  touchAfter: 24 * 60 * 60,
+  crypto:{
+    secret : process.env.SECRET,
+  }
+});
+
+// Session Configuration 
+const sessionOptions = {
+  store,
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: false, 
+  cookie: {
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+
+  },
+  rolling: true
+};
+
+// Session must be before passport
+app.use(session(sessionOptions));
+app.use(flash());
+
+// Passport configuration
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+// Global middleware for templates and session management
+app.use((req, res, next) => {
+  // current user available in templates
+  res.locals.currentUser = req.user;
+  
+  // flash messages 
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  
+  // Store original url in session if it's not a login or logout request
+  if (!['/login', '/logout', '/register'].includes(req.originalUrl)) {
+    req.session.previousUrl = req.originalUrl;
+  }
+  
+  next();
+});
+
+// Route handlers
+app.use("/listings", listingRouter);
+app.use("/listings/:id/reviews", reviewRouter); 
+app.use("/", userRouter);
+
+// MongoDB Connection
+async function main() {
+  try {
+    await mongoose.connect(dburl);
+    console.log("Connection Successful");
+  } catch (err) {
+    console.log("MongoDB Connection Error:", err);
+  }
+}
+
+main();
+
+// Home Route
+app.get("/", async (req, res) => {
+  try {
+    const listings = await Listing.find({}).limit(6);
+    res.render("listings/home.ejs", { listings });
+  } catch (err) {
+    console.error("Error fetching listings:", err);
+    res.render("listings/home.ejs", { listings: [] });
+  }
+});
+
+app.get("/about",(req,res)=>{
+  res.render("./listings/about.ejs");
+});
+
+app.get("/contact", (req, res) => {
+  const success = req.query.success === 'true';
+  res.render("./listings/contact.ejs", { success });
+});
+
+app.get("/home",isLoggedIn, (req, res) => {
+  // const currUser = req.user;
+  res.render("./listings/home.ejs");
+  
+});
+
+// 404 Error Middleware
+app.use((req, res) => {
+  res.status(404).render("./listings/error.ejs", { err: "Page Not Found" });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err);
+  const { statusCode = 500 } = err;
+  if (!err.message) err.message = "Oh No, Something Went Wrong!";
+  res.status(statusCode).render("error", { err });
+});
+
+// Server Listen
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});

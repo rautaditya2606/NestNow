@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NestNow - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --luxury-gold: #D4AF37;
+            --luxury-dark: #1C1C1C;
+            --luxury-cream: #F5F5F0;
+            --luxury-gradient: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+        }
+
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                        url('https://images.unsplash.com/photo-1566073771259-6a8506099945') no-repeat center center/cover;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .login-form {
+            background: rgba(255, 255, 255, 0.97);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 450px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--luxury-gradient);
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .input-group-text {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #eee;
+            border-radius: 0;
+            color: var(--luxury-gold);
+        }
+
+        .form-control {
+            border: none;
+            border-bottom: 2px solid #eee;
+            border-radius: 0;
+            padding: 1rem 0.8rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--luxury-gold);
+            box-shadow: none;
+        }
+
+        .btn-login {
+            background: var(--luxury-gradient);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 30px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--luxury-gold);
+            border-color: var(--luxury-gold);
+        }
+
+        .text-luxury {
+            color: var(--luxury-gold);
+        }
+
+        a {
+            color: var(--luxury-gold);
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #b08a2b;
+        }
+
+        h2 {
+            color: var(--luxury-dark);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .input-group input::placeholder {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .alert {
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 576px) {
+            .login-form {
+                padding: 2rem;
+                margin: 1rem;
+            }
+        }
+        @media (max-width: 576px) {
+    .login-form {
+        padding: 2rem;
+        margin: 1rem;
+        width: 90%;
+        max-width: 100%;
+        border-radius: 15px;
+    }
+
+    .input-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .input-group-text {
+        padding: 0.8rem;
+    }
+
+    .form-control {
+        font-size: 16px; /* Prevents iOS zoom */
+        padding: 0.8rem;
+        height: auto;
+    }
+
+    .btn-login {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+
+    h2 {
+        font-size: 1.75rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+    }
+
+    .alert-container {
+        width: 90%;
+        top: 10px;
+    }
+
+    .alert {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    .form-check-label, 
+    .text-muted {
+        font-size: 0.9rem;
+    }
+
+    .btn-login {
+        margin-top: 1rem;
+        padding: 15px;
+    }
+
+    .text-center.mt-4 {
+        margin-top: 2rem !important;
+    }
+}
+
+/* Add touch-friendly styles */
+@media (hover: none) {
+    .btn-login:active {
+        transform: scale(0.98);
+    }
+
+    .form-control:focus {
+        font-size: 16px;
+    }
+
+    .input-group-text,
+    .form-control {
+        min-height: 44px; /* Minimum touch target size */
+    }
+}
+
+/* Fix iOS specific issues */
+@supports (-webkit-touch-callout: none) {
+    .login-form {
+        backdrop-filter: none;
+        background: rgba(255, 255, 255, 0.98);
+    }
+
+    .form-control,
+    .input-group-text {
+        -webkit-appearance: none;
+    }
+}
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="alert-container">
+        <% if (success && success.length) { %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <%= success %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <% } %>
+
+        <% if (error && error.length) { %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <%= error %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <% } %>
+    </div>
+
+    <div class="container min-vh-100 d-flex align-items-center justify-content-center">
+        <div class="login-form">
+            <div class="text-center mb-4">
+                <h2 class="fw-bold mb-2">Welcome Back</h2>
+                <p class="text-muted">Enter your credentials to access your account</p>
+            </div>
+
+            <form action="/login" method="POST">
+                <div class="input-group">
+                    <span class="input-group-text" aria-label="Username">
+                        <i class="fas fa-user text-muted"></i>
+                    </span>
+                    <input type="text" class="form-control" 
+                           id="username" name="username" 
+                           placeholder="Enter your username" required>
+                </div>
+
+                <div class="input-group">
+                    <span class="input-group-text" aria-label="Password">
+                        <i class="fas fa-lock text-muted"></i>
+                    </span>
+                    <input type="password" class="form-control" 
+                           id="password" name="password" 
+                           placeholder="Enter your password" required>
+                    <button type="button" class="btn position-absolute end-0 top-50 translate-middle-y" 
+                            onclick="togglePassword()" aria-label="Toggle password visibility">
+                        <i class="far fa-eye"></i>
+                    </button>
+                </div>
+
+                <div class="d-flex justify-content-between mb-4">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="remember">
+                        <label class="form-check-label" for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="text-decoration-none">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-login w-100">
+                    <i class="fas fa-sign-in-alt me-2"></i>Log in
+                </button>
+
+                <div class="text-center mt-4">
+                    <span class="text-muted">Don't have an account?</span>
+                    <a href="/signup" class="text-decoration-none ms-1">Sign Up</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.querySelector('.btn i');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+    </script>
+    <script src="/js/darkMode.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

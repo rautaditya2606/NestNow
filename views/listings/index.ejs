@@ -1,0 +1,355 @@
+<% layout("/layouts/boilerplate") %>
+
+    <style>
+        /* From Uiverse.io by Galahhad */
+        .checkbox {
+            display: none;
+        }
+
+        .slider {
+
+            width: 60px;
+            height: 30px;
+            background-color: lightgray;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            border: 4px solid transparent;
+            transition: .3s;
+            box-shadow: 0 0 10px 0 rgb(0, 0, 0, 0.25) inset;
+            cursor: pointer;
+        }
+
+        .slider::before {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            transform: translateX(-30px);
+            border-radius: 20px;
+            transition: .3s;
+            box-shadow: 0 0 10px 3px rgb(0, 0, 0, 0.25);
+        }
+
+        .checkbox:checked~.slider::before {
+            transform: translateX(30px);
+            box-shadow: 0 0 10px 3px rgb(0, 0, 0, 0.25);
+        }
+
+        .checkbox:checked~.slider {
+            background-color: #D4AF37;
+        }
+
+        .checkbox:active~.slider::before {
+            transform: translate(0);
+        }
+    </style>
+    <div class="container-fluid px-4 py-5">
+        <div class="d-flex justify-content-end align-items-center mb-4">
+            <!-- Tax Toggle -->
+            <div class="tax-toggle-container">
+                <label class="switch d-flex align-items-center gap-2">
+                    <span class="tax-label">with GST</span>
+                    <input type="checkbox" class="checkbox" id="taxToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row g-4 ">
+            <% for (listing of allListings) { %>
+                <div class="col-12">
+                    <a href="/listings/<%= listing._id %>" class="text-decoration-none"
+                        aria-label="View details of <%= listing.title %>">
+                        <div class="card hover-scale">
+                            <div class="row g-0 d-flex justify-content-center">
+                                <!-- Left: Image Section -->
+                                <div class="col-md-4">
+                                    <div class="card-img-wrapper h-100">
+                                        <img src="<%= listing.image.url %>"
+                                            class="img-fluid rounded-start w-100 h-100 lazy" alt="<%= listing.title %>"
+                                            style="object-fit: cover;" loading="lazy">
+                                        <div class="card-badge">
+                                            <i class="fas fa-map-marker-alt me-1"></i>
+                                            <%= listing.location %>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Middle: Details Section -->
+                                <div class="col-md-6">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-3">
+                                            <%= listing.title %>
+                                        </h4>
+                                        <p class="card-text text-muted mb-2">
+                                            <i class="fas fa-map-marker-alt me-2"></i>
+                                            <%= listing.location %>, <%= listing.country %>
+                                        </p>
+                                        <p class="card-text description mb-3">
+                                            <%= listing.description %>
+                                        </p>
+                                        <p class="card-text price-tag">
+                                            <i class="fas fa-tag me-2 text-luxury"></i>
+                                            <span class="original-price">₹<%= listing.price.toLocaleString("en-IN") %>
+                                                    </span>
+                                            <span class="tax-price" style="display: none">
+                                                ₹<%= (listing.price * 1.18).toLocaleString("en-IN") %>
+                                            </span>
+                                            <span>/ Night</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Right: Rating Section -->
+                                <div class="col-md-2">
+                                    <div
+                                        class="card-body h-100 d-flex flex-column justify-content-center align-items-center border-start">
+                                        <div class="rating-circle mb-2">
+                                            <%if(listing.review && listing.review.length> 0){%>
+                                                <% const avgRating=listing.review.reduce((sum, r)=> sum + r.rating, 0) /
+                                                    listing.review.length %>
+                                                    <h3 class="mb-0">
+                                                        <%= avgRating.toFixed(1) %>
+                                                    </h3>
+                                                    <small>out of 5</small>
+                                                    <%}else{%>
+                                                        <h3 class="mb-0"></h3>
+                                                        <small style="text-align: center;">No reviews</small>
+                                                        <%}%>
+                                        </div>
+                                        <small class="text-muted">
+                                            <%= listing.review ? listing.review.length : 0 %> reviews
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <% } %>
+        </div>
+    </div>
+
+    <script src="/js/darkMode.js"></script>
+    <script>
+        document.getElementById('taxToggle').addEventListener('change', function () {
+            const originalPrices = document.querySelectorAll('.original-price');
+            const taxPrices = document.querySelectorAll('.tax-price');
+
+            originalPrices.forEach(price => {
+                price.style.display = this.checked ? 'none' : 'inline';
+            });
+
+            taxPrices.forEach(price => {
+                price.style.display = this.checked ? 'inline' : 'none';
+            });
+        });
+    </script>
+
+    <style>
+        :root {
+            --luxury-gold-gradient: linear-gradient(135deg, #f0c27b);
+            --luxury-dark: #333;
+            --luxury-light: #f8f9fa;
+            --luxury-primary: #007bff;
+            --luxury-secondary: #6c757d;
+        }
+
+        .card {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            margin-bottom: 1.5rem;
+            height: 250px;
+            /* Fixed height for all cards */
+            background-color: var(--luxury-light);
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-img-wrapper {
+            position: relative;
+            height: 250px;
+            /* Match card height */
+        }
+
+        .card-img-wrapper img {
+            height: 250px;
+            /* Match card height */
+            object-fit: cover;
+        }
+
+        .card .row {
+            height: 100%;
+        }
+
+        .card .col-md-4,
+        .card .col-md-6,
+        .card .col-md-2 {
+            height: 100%;
+        }
+
+        .description {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            /* Limit to 3 lines */
+            -webkit-box-orient: vertical;
+            line-height: 1.5;
+        }
+
+        .card-badge {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .rating-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--luxury-gold-gradient);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--luxury-dark);
+        }
+
+        .price-tag {
+            font-size: 1.2rem;
+            color: var(--luxury-dark);
+        }
+
+        .description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 992px) {
+            .card {
+                height: 300px;
+                /* Slightly taller on medium screens */
+            }
+
+            .description {
+                -webkit-line-clamp: 2;
+                /* Show fewer lines on medium screens */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                height: auto;
+                /* Allow flexible height on mobile */
+                min-height: 500px;
+            }
+
+            .card .row {
+                flex-direction: column;
+            }
+
+            .col-md-4,
+            .col-md-6,
+            .col-md-2 {
+                width: 100%;
+            }
+
+            .card-img-wrapper {
+                height: 200px;
+            }
+
+            .card-img-wrapper img {
+                height: 200px;
+                border-radius: 8px 8px 0 0;
+            }
+
+            .rating-circle {
+                width: 60px;
+                height: 60px;
+                font-size: 0.9rem;
+            }
+
+            .card-body {
+                padding: 1rem;
+            }
+
+            .border-start {
+                border-left: none !important;
+                border-top: 1px solid rgba(0, 0, 0, 0.1);
+                flex-direction: row !important;
+                justify-content: space-between !important;
+                padding-top: 1rem;
+                margin-top: 1rem;
+            }
+
+            .rating-circle {
+                margin-bottom: 0 !important;
+                margin-right: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .card-img-wrapper {
+                height: 150px;
+            }
+
+            .card {
+                margin: 0.5rem 0;
+            }
+
+            .card-title {
+                font-size: 1.2rem;
+            }
+
+            .price-tag {
+                font-size: 1rem;
+            }
+
+            .description {
+                font-size: 0.9rem;
+            }
+
+            .col-12 {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .tax-toggle-container {
+                padding: 0 1rem;
+            }
+
+            .tax-label {
+                color: #666;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Update existing slider styles */
+        .slider {
+            cursor: pointer;
+            margin-right: 8px;
+        }
+
+        .tax-price {
+            color: #D4AF37;
+            font-weight: bold;
+        }
+
+        .filters-container {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>

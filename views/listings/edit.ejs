@@ -1,0 +1,140 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-luxury border-0">
+        <div class="card-body p-4">
+          <h2 class="text-center mb-4">
+            <i class="fas fa-edit text-luxury me-2"></i>
+            Edit Your Listing
+          </h2>
+
+          <form method="POST" 
+                action="/listings/<%= listing._id %>?_method=PUT" 
+                class="needs-validation" 
+                novalidate
+                enctype="multipart/form-data">
+            
+            <!-- Title Input -->
+            <div class="mb-4">
+              <label class="form-label text-luxury">
+                <i class="fas fa-heading me-2"></i>Title
+              </label>
+              <input type="text" 
+                     class="form-control form-control-lg" 
+                     name="listing[title]"
+                     value="<%= listing.title %>"
+                     required>
+              <div class="invalid-feedback">Please enter a title.</div>
+            </div>
+
+            <!-- Description Input -->
+            <div class="mb-4">
+              <label class="form-label text-luxury">
+                <i class="fas fa-align-left me-2"></i>Description
+              </label>
+              <textarea class="form-control" 
+                        name="listing[description]" 
+                        rows="4" 
+                        required><%= listing.description %></textarea>
+              <div class="invalid-feedback">Please provide a description.</div>
+            </div>
+
+            <!-- Image URL with Preview -->
+            <div class="mb-4">
+              <label class="form-label text-luxury">
+                <i class="fas fa-image me-2"></i>Upload Image
+              </label>
+              <div class="input-group">
+                <input type="file" 
+                       class="form-control" 
+                       name="image"
+                       id="imageUrl"
+                       onchange="updatePreview()"
+                       >
+                <button class="btn btn-outline-luxury" 
+                        type="button"
+                        onclick="previewImage()">
+                  <i class="fas fa-eye me-1"></i>Preview
+                </button>
+              </div>
+              <div class="mt-2 text-center d-none" id="imagePreview">
+                <img src="" alt="Preview" class="img-fluid rounded" style="max-height: 200px">
+              </div>
+            </div>
+
+            <!-- Price Input -->
+            <div class="mb-4">
+              <label class="form-label text-luxury">
+                <i class="fas fa-tag me-2"></i>Price per Night
+              </label>
+              <div class="input-group">
+                <span class="input-group-text">₹</span>
+                <input type="number" 
+                       class="form-control" 
+                       name="listing[price]"
+                       value="<%= listing.price %>"
+                       required>
+              </div>
+            </div>
+
+            <!-- Location Input -->
+            <div class="mb-4">
+              <label class="form-label text-luxury">
+                <i class="fas fa-map-marker-alt me-2"></i>Location
+              </label>
+              <input type="text" 
+                     class="form-control" 
+                     name="listing[location]"
+                     value="<%= listing.location %>"
+                     required>
+            </div>
+
+            <!-- Country Input -->
+            <div class="mb-4">
+              <label class="form-label text-luxury">
+                <i class="fas fa-globe me-2"></i>Country
+              </label>
+              <input type="text" 
+                     class="form-control" 
+                     name="listing[country]"
+                     value="<%= listing.country %>"
+                     required>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+              <a href="/listings/<%=listing._id%>" class="btn btn-outline-secondary me-md-2">Cancel</a>
+              <button type="submit" class="btn btn-luxury px-4 py-2" style="color: white;" >
+                <i class="fa-regular fa-pen-to-square"></i>  Update Nest
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/darkMode.js"></script>
+
+<style>
+.text-luxury { color: #212529; }
+.btn-luxury {
+    background: linear-gradient(45deg, #212529, #212529);
+    border: none;
+    color: #1C1C1C;
+}
+.btn-luxury:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+}
+.shadow-luxury {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+.form-control:focus {
+    border-color: #2563EB;
+    box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+}
+</style>

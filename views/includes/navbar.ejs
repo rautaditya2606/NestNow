@@ -1,0 +1,456 @@
+<nav class="navbar navbar-expand-md bg-light border-bottom shadow-sm sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center" href="/listings">
+            <img src="https://media.istockphoto.com/id/1327469328/vector/line-art-of-nest-with-grass-and-feathers-nest-logo-concept.jpg?s=612x612&w=0&k=20&c=jgtVHr3a0iXwsCS-i6hUhMOwumwF0CMhuBQEYAJ8MjM="
+                alt="Nest Logo" style="height: 60px; width: auto;">
+            <span class="ms-2 fw-bold" style="color:  #D4AF37;">NestNow</span>
+        </a>
+
+        <!-- From Uiverse.io by alexruix -->
+        <div class="search-group">
+            <div class="group">
+                <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+                    <g>
+                        <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
+                    </g>
+                </svg>
+                <input placeholder="Search villa..." type="search" class="input">
+            </div>
+        </div>
+
+
+
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse " id="navbarNavDropdown">
+            <ul class="navbar-nav ms-auto">
+                <%if(currentUser){%>
+                    <li class="nav-item dropdown d-flex align-items-center justify-content-center ">
+                        <div class="meow">
+                            <button class="nav-link dropdown-toggle user-menu" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="fas fa-user-circle fa-lg me-2"></i>
+                                Your Profile
+                            </button>
+                            <ul class="dropdown-menu">
+                                <a href="/listings/profile" style="text-decoration: none;">
+                                    <li
+                                        class="dropdown-item user-email d-flex align-items-center justify-content-start">
+                                        <i class="fa-regular fa-user me-2 "></i>
+                                        <%= currentUser.username %>
+                                    </li>
+                                </a>
+                                <li class="dropdown-item user-email d-flex align-items-center justify-content-start">
+                                    <i class="fas fa-envelope me-2"></i>
+                                    <%= currentUser.email %>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider d-flex align-items-center justify-content-center">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item logout-link" href="/logout">
+                                        <i class="fa-solid fa-right-from-bracket me-2"></i>
+                                        Log out
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <%} else {%>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">
+                                <i class="fa-solid fa-right-to-bracket me-2"></i>Login
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/signup">
+                                <i class="fa-regular fa-address-card me-2"></i>Sign Up
+                            </a>
+                        </li>
+                        <%}%>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary" href="/listings/new">
+                                    <i class="fa-solid fa-plus"></i>
+                                    Add Nest
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/"><i class="fas fa-home me-2"></i>Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about"><i class="fas fa-info-circle me-2"></i>About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/contact"><i class="fas fa-envelope me-2"></i>Contact</a>
+                            </li>
+            </ul>
+            <br>
+        </div>
+    </div>
+</nav>
+
+<style>
+    :root {
+        --luxury-gold: #D4AF37;
+        --luxury-dark: #1C1C1C;
+        --luxury-gradient: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+    }
+
+    .navbar {
+        padding: 0.8rem 2rem;
+        background: white;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .navbar-brand {
+        font-size: 1.8rem;
+    }
+
+    .navbar-brand img {
+        height: 45px;
+        width: auto;
+        transition: all 0.3s ease;
+    }
+
+    .navbar-brand span {
+        background: var(--luxury-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 700;
+    }
+
+    .nav-link {
+        position: relative;
+        padding: 0.5rem 1.2rem;
+        font-weight: 500;
+        color: var(--luxury-dark) !important;
+        transition: all 0.3s ease;
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: var(--luxury-gradient);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+
+    .nav-link:hover::after {
+        width: 70%;
+    }
+
+    .dropdown-menu {
+        border: none;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        padding: 1rem;
+        transform-origin: right;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .dropdown-menu.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .dropdown-toggle {
+        transition: color 0.3s ease;
+    }
+
+    .dropdown-toggle:hover {
+        color: var(--luxury-gold);
+    }
+
+    .dropdown-item {
+        border-radius: 8px;
+        padding: 0.8rem 1rem;
+        transition: all 0.3s ease;
+        position: relative;
+        left: 0;
+    }
+
+    .dropdown-item:hover {
+        left: 5px;
+        background: rgba(212, 175, 55, 0.1);
+        color: var(--luxury-gold);
+        transform: translateX(5px);
+    }
+
+    @media (max-width: 576px) {
+        .navbar {
+            padding: 0.5rem 1rem;
+        }
+
+        .navbar-collapse {
+            background: white;
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link::after {
+            display: none;
+        }
+
+        .nav-link:hover {
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .dropdown-menu {
+            box-shadow: none;
+            background: #f8f9fa;
+            margin-top: 0.5rem;
+            transform-origin: top;
+        }
+
+        .dropdown-item:hover {
+            transform: none;
+        }
+
+        .dropdown-menu {
+            position: static !important;
+            transform-origin: top !important;
+            width: 100%;
+            margin: 0.5rem 0;
+            padding: 0.8rem;
+            box-shadow: none;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu.show {
+            transform: translateY(0) !important;
+            opacity: 1;
+        }
+
+        .nav-item.dropdown {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dropdown-toggle::after {
+            float: right;
+            margin-top: 10px;
+        }
+
+        .user-menu {
+            width: 100%;
+            text-align: left;
+            padding: 0.8rem;
+        }
+    }
+
+    /* Touch-friendly styles */
+    @media (hover: none) {
+
+        .nav-link:active,
+        .dropdown-item:active {
+            background: #f8f9fa;
+        }
+
+        .nav-link,
+        .dropdown-item {
+            min-height: 44px;
+        }
+    }
+
+    .dark-mode-toggle {
+        display: flex;
+        align-items: center;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem 1.2rem;
+        color: var(--luxury-dark);
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .dark-mode-toggle:hover {
+        color: var(--luxury-gold);
+    }
+
+    .dark-mode-toggle i {
+        font-size: 1.1rem;
+        transition: transform 0.3s ease;
+    }
+
+    .dark-mode-toggle:hover i {
+        transform: rotate(-15deg);
+    }
+
+    @media (max-width: 576px) {
+        .dark-mode-toggle {
+            width: 100%;
+            justify-content: flex-start;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+        }
+
+        .dark-mode-toggle:hover {
+            background: #f8f9fa;
+        }
+    }
+
+    .user-menu {
+        border: none;
+        background: transparent;
+        padding: 0.5rem 1rem;
+        color: var(--luxury-dark);
+        transition: all 0.3s ease;
+    }
+
+    .user-menu:hover {
+        color: var(--luxury-gold);
+    }
+
+    .dropdown-menu {
+        min-width: 240px;
+        padding: 0.8rem;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transform: translateY(10px);
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .dropdown-menu.show {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .user-email {
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+
+    .logout-link {
+        color: #dc3545;
+    }
+
+    .logout-link:hover {
+        background-color: rgba(220, 53, 69, 0.1);
+        color: #dc3545;
+    }
+
+    @media (max-width: 576px) {
+        .nav-item.dropdown {
+            width: 100%;
+        }
+
+        .user-menu {
+            width: 100%;
+            text-align: left;
+            padding: 0.8rem;
+            border-radius: 8px;
+        }
+
+        .dropdown-menu {
+            width: 100%;
+            margin-top: 0.5rem;
+            box-shadow: none;
+            background-color: #f8f9fa;
+        }
+
+        .dropdown-item {
+            padding: 0.8rem;
+            border-radius: 6px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .navbar-collapse {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            bottom: 0;
+            width: 80%;
+            /* padding: 2rem 1rem; */
+            background: white;
+            transition: all 0.3s ease-in-out;
+            height: 100vh !important;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-collapse.show {
+            right: 0;
+        }
+
+        .navbar-toggler {
+            z-index: 1001;
+        }
+
+        /* Backdrop overlay when menu is open */
+        .navbar-collapse::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* background: rgba(0,0,0,0.5); */
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .navbar-collapse.show::before {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .navbar-nav {
+            margin-top: 2rem;
+        }
+
+        .nav-item {
+            margin: 0.5rem 0;
+        }
+
+        .nav-link {
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .dropdown-menu {
+            position: static !important;
+            width: 100%;
+            margin: 0.5rem 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: none;
+        }
+
+        .navbar-brand {
+            font-size: 1.4rem;
+        }
+
+        .navbar-brand img {
+            height: 35px;
+        }
+    }
+</style>
+
+<script src="/js/script.js"></script>
+</script>
