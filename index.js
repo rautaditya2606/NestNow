@@ -149,7 +149,7 @@ app.get("/search", async (req, res) => {
       ]
     });
     
-    res.render("listings/search", { 
+    res.render("./listings/search.ejs", { 
       listings: searchResults, 
       searchQuery: q 
     });
