@@ -1,0 +1,45 @@
+<%- layout("layouts/boilerplate") %>
+
+<div class="row">
+    <div class="col-6 offset-3">
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading"><%- err.statusCode || 500 %></h4>
+            <h5><%= err.message %></h5>
+            <% if (process.env.NODE_ENV !== "production") { %>
+                <p class="mb-0"><%= err.stack %></p>
+            <% } %>
+        </div>
+        <div class="text-center mt-4">
+            <a href="/" class="btn btn-primary">Back to Home</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .alert {
+        margin-top: 2rem;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .alert-heading {
+        color: #721c24;
+        margin-bottom: 1rem;
+    }
+
+    .btn-primary {
+        padding: 0.5rem 2rem;
+        font-weight: 500;
+    }
+
+    .stack-trace {
+        font-family: monospace;
+        white-space: pre-wrap;
+        font-size: 0.9rem;
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 4px;
+        margin-top: 1rem;
+    }
+</style>
