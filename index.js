@@ -133,6 +133,33 @@ app.get("/home",isLoggedIn, (req, res) => {
   
 });
 
+// Add this before the 404 Error Middleware
+app.get("/search", async (req, res) => {
+  try {
+    const { q } = req.query;
+    if (!q) {
+      return res.redirect("/listings");
+    }
+    
+    const searchResults = await Listing.find({
+      $or: [
+        { title: { $regex: q, $options: "i" } },
+        { location: { $regex: q, $options: "i" } },
+        { description: { $regex: q, $options: "i" } }
+      ]
+    });
+    
+    res.render("listings/search", { 
+      listings: searchResults, 
+      searchQuery: q 
+    });
+  } catch (err) {
+    console.error("Search error:", err);
+    req.flash("error", "Error performing search");
+    res.redirect("/listings");
+  }
+});
+
 // 404 Error Middleware
 app.use((req, res) => {
   res.status(404).render("./listings/error.ejs", { err: "Page Not Found" });
@@ -143,7 +170,7 @@ app.use((err, req, res, next) => {
   console.error(err);
   const { statusCode = 500 } = err;
   if (!err.message) err.message = "Oh No, Something Went Wrong!";
-  res.status(statusCode).render("./listings/error", { err });
+  res.status(statusCode).render("error", { err });
 });
 
 // Server Listen
