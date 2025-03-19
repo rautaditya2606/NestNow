@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +17,7 @@
 
         body {
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                        url('https://images.unsplash.com/photo-1566073771259-6a8506099945') no-repeat center center/cover;
+                url('https://images.unsplash.com/photo-1566073771259-6a8506099945') no-repeat center center/cover;
             min-height: 100vh;
             font-family: 'Poppins', sans-serif;
         }
@@ -119,7 +120,7 @@
 
         .alert {
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         @media (max-width: 576px) {
@@ -128,113 +129,117 @@
                 margin: 1rem;
             }
         }
+
         @media (max-width: 576px) {
-    .login-form {
-        padding: 2rem;
-        margin: 1rem;
-        width: 90%;
-        max-width: 100%;
-        border-radius: 15px;
-    }
+            .login-form {
+                padding: 2rem;
+                margin: 1rem;
+                width: 90%;
+                max-width: 100%;
+                border-radius: 15px;
+            }
 
-    .input-group {
-        margin-bottom: 1.5rem;
-    }
+            .input-group {
+                margin-bottom: 1.5rem;
+            }
 
-    .input-group-text {
-        padding: 0.8rem;
-    }
+            .input-group-text {
+                padding: 0.8rem;
+            }
 
-    .form-control {
-        font-size: 16px; /* Prevents iOS zoom */
-        padding: 0.8rem;
-        height: auto;
-    }
+            .form-control {
+                font-size: 16px;
+                /* Prevents iOS zoom */
+                padding: 0.8rem;
+                height: auto;
+            }
 
-    .btn-login {
-        padding: 12px 20px;
-        font-size: 1rem;
-    }
+            .btn-login {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
 
-    h2 {
-        font-size: 1.75rem;
-    }
+            h2 {
+                font-size: 1.75rem;
+            }
 
-    p {
-        font-size: 0.9rem;
-    }
+            p {
+                font-size: 0.9rem;
+            }
 
-    .alert-container {
-        width: 90%;
-        top: 10px;
-    }
+            .alert-container {
+                width: 90%;
+                top: 10px;
+            }
 
-    .alert {
-        padding: 0.75rem;
-        font-size: 0.9rem;
-    }
+            .alert {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
 
-    .form-check-label, 
-    .text-muted {
-        font-size: 0.9rem;
-    }
+            .form-check-label,
+            .text-muted {
+                font-size: 0.9rem;
+            }
 
-    .btn-login {
-        margin-top: 1rem;
-        padding: 15px;
-    }
+            .btn-login {
+                margin-top: 1rem;
+                padding: 15px;
+            }
 
-    .text-center.mt-4 {
-        margin-top: 2rem !important;
-    }
-}
+            .text-center.mt-4 {
+                margin-top: 2rem !important;
+            }
+        }
 
-/* Add touch-friendly styles */
-@media (hover: none) {
-    .btn-login:active {
-        transform: scale(0.98);
-    }
+        /* Add touch-friendly styles */
+        @media (hover: none) {
+            .btn-login:active {
+                transform: scale(0.98);
+            }
 
-    .form-control:focus {
-        font-size: 16px;
-    }
+            .form-control:focus {
+                font-size: 16px;
+            }
 
-    .input-group-text,
-    .form-control {
-        min-height: 44px; /* Minimum touch target size */
-    }
-}
+            .input-group-text,
+            .form-control {
+                min-height: 44px;
+                /* Minimum touch target size */
+            }
+        }
 
-/* Fix iOS specific issues */
-@supports (-webkit-touch-callout: none) {
-    .login-form {
-        backdrop-filter: none;
-        background: rgba(255, 255, 255, 0.98);
-    }
+        /* Fix iOS specific issues */
+        @supports (-webkit-touch-callout: none) {
+            .login-form {
+                backdrop-filter: none;
+                background: rgba(255, 255, 255, 0.98);
+            }
 
-    .form-control,
-    .input-group-text {
-        -webkit-appearance: none;
-    }
-}
+            .form-control,
+            .input-group-text {
+                -webkit-appearance: none;
+            }
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <div class="alert-container">
         <% if (success && success.length) { %>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <%= success %>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <% } %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <%= success %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <% } %>
 
-        <% if (error && error.length) { %>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <%= error %>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <% } %>
+                <% if (error && error.length) { %>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <%= error %>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <% } %>
     </div>
 
     <div class="container min-vh-100 d-flex align-items-center justify-content-center">
@@ -249,20 +254,18 @@
                     <span class="input-group-text" aria-label="Username">
                         <i class="fas fa-user text-muted"></i>
                     </span>
-                    <input type="text" class="form-control" 
-                           id="username" name="username" 
-                           placeholder="Enter your username" required>
+                    <input type="text" class="form-control" id="username" name="username"
+                        placeholder="Enter your username" required>
                 </div>
 
                 <div class="input-group">
                     <span class="input-group-text" aria-label="Password">
                         <i class="fas fa-lock text-muted"></i>
                     </span>
-                    <input type="password" class="form-control" 
-                           id="password" name="password" 
-                           placeholder="Enter your password" required>
-                    <button type="button" class="btn position-absolute end-0 top-50 translate-middle-y" 
-                            onclick="togglePassword()" aria-label="Toggle password visibility">
+                    <input type="password" class="form-control" id="password" name="password"
+                        placeholder="Enter your password" required>
+                    <button type="button" class="btn position-absolute end-0 top-50 translate-middle-y"
+                        onclick="togglePassword()" aria-label="Toggle password visibility">
                         <i class="far fa-eye"></i>
                     </button>
                 </div>
@@ -305,4 +308,5 @@
     <script src="/js/darkMode.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

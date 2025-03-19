@@ -8,20 +8,14 @@
 
 
         <form class="d-flex ms-auto me-3" action="/search" method="GET">
-                <div class="input-group">
-                    <input 
-                      class="form-control"
-                      type="search"
-                      placeholder="Search listings..."
-                      name="q"
-                      value="<%= locals.searchQuery || '' %>"
-                      aria-label="Search"
-                    >
-                    <button class="btn btn-outline-dark" type="submit">
-                      <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </form>
+            <div class="input-group">
+                <input class="form-control" type="search" placeholder="Search listings..." name="q"
+                    value="<%= locals.searchQuery || '' %>" aria-label="Search">
+                <button class="btn btn-outline-dark" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
 
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -92,7 +86,7 @@
                             </li>
             </ul>
             <br>
-            
+
         </div>
     </div>
 </nav>

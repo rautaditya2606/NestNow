@@ -1,175 +1,177 @@
 <% layout("/layouts/boilerplate") %>
 
-<div class="contact-page">
-  <!-- Hero Section -->
-  <div class="hero-section text-center py-5">
-    <div class="container">
-      <h1 class="display-4 fw-bold text-luxury">Contact Us</h1>
-      <p class="lead">We'd Love to Hear From You</p>
-    </div>
-  </div>
-
-  <!-- Flash Message -->
-  <% if (typeof success !== 'undefined' && success) { %>
-    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-      <strong>Thank you!</strong> Your message has been sent successfully.
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  <% } %>
-
-  <div class="container my-5">
-    <div class="row g-5">
-      <!-- Contact Form -->
-      <div class="col-lg-7">
-        <div class="card shadow-luxury border-luxury">
-          <div class="card-body p-4">
-            <h3 class="card-title mb-4">Send us a Message</h3>
-            <form action="https://api.web3forms.com/submit" method="POST" class="needs-validation" novalidate>
-              <input type="hidden" name="access_key" value="89cc64df-0f60-4568-903c-05e072ad22ef">
-              <input type="hidden" name="redirect" value="https://nestnow-1.onrender.com/contact?success=true">
-              <div class="row g-3">
-                <div class="col-md-6">
-                  <label class="form-label">
-                    <i class="fas fa-user me-2 text-luxury"></i>Name
-                  </label>
-                  <input type="text" name="name" class="form-control" required>
-                </div>
-                <div class="col-md-6">
-                  <label class="form-label">
-                    <i class="fas fa-envelope me-2 text-luxury"></i>Email
-                  </label>
-                  <input type="email" name="email" class="form-control" required>
-                </div>
-                <div class="col-12">
-                  <label class="form-label">
-                    <i class="fas fa-tag me-2 text-luxury"></i>Subject
-                  </label>
-                  <input type="text" name="subject" class="form-control" required>
-                </div>
-                <div class="col-12">
-                  <label class="form-label">
-                    <i class="fas fa-comment me-2 text-luxury"></i>Message
-                  </label>
-                  <textarea class="form-control" name="message" rows="5" required></textarea>
-                </div>
-                <div class="col-12">
-                  <button type="submit" class="btn btn-luxury w-100">
-                    <i class="fas fa-paper-plane me-2"></i>Send Message
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <!-- Contact Info -->
-      <div class="col-lg-5">
-        <div class="card shadow-luxury border-luxury mb-4">
-          <div class="card-body p-4">
-            <h3 class="card-title mb-4">Get in Touch</h3>
-            <div class="d-flex mb-3">
-              <i class="fas fa-map-marker-alt text-luxury me-3 fa-2x"></i>
-              <div>
-                <h5>Address</h5>
-                <p>MIT ADT University , Loni Kalbhor <br>Pune, Maharashtra 421002</p>
-              </div>
-            </div>
-            <div class="d-flex mb-3">
-              <i class="fas fa-phone text-luxury me-3 fa-2x"></i>
-              <div>
-                <h5>Phone</h5>
-                <p>+91 9209793522</p>
-              </div>
-            </div>
-            <a href="https://mail.google.com/mail/u/0/#inbox" style="text-decoration: none; color: black;">
-              <div class="d-flex mb-3">
-                <i class="fas fa-envelope text-luxury me-3 fa-2x"></i>
-                <div>
-                  <h5>Email</h5>
-                  <p>rautaditya2606@gmail.com</p>
-                </div>
-              </div>
-            </a>
-            <hr>
-            <h5 class="mb-3">Follow Us</h5>
-            <div class="social-links">
-              <a href="https://github.com/rautaditya2606" class="me-3"><i class="fab fa-github fa-2x"></i></a>
-              <a href="https://x.com/irly_dgaf" class="me-3"><i class="fab fa-twitter fa-2x"></i></a>
-              <a href="https://www.instagram.com/cant.bench.220/" class="me-3"><i class="fab fa-instagram fa-2x"></i></a>
-              <a href="https://www.linkedin.com/in/aditya-raut-3b4bba31b/" class="me-3"><i class="fab fa-linkedin fa-2x"></i></a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Office Hours -->
-        <div class="card shadow-luxury border-luxury">
-          <div class="card-body p-4">
-            <h3 class="card-title mb-4">Office Hours</h3>
-            <ul class="list-unstyled">
-              <li class="mb-2">Monday - Friday: 9:00 AM - 6:00 PM</li>
-              <li class="mb-2">Saturday: 10:00 AM - 4:00 PM</li>
-              <li>Sunday: Closed</li>
-            </ul>
-          </div>
-        </div>
+  <div class="contact-page">
+    <!-- Hero Section -->
+    <div class="hero-section text-center py-5">
+      <div class="container">
+        <h1 class="display-4 fw-bold text-luxury">Contact Us</h1>
+        <p class="lead">We'd Love to Hear From You</p>
       </div>
     </div>
+
+    <!-- Flash Message -->
+    <% if (typeof success !=='undefined' && success) { %>
+      <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        <strong>Thank you!</strong> Your message has been sent successfully.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <% } %>
+
+        <div class="container my-5">
+          <div class="row g-5">
+            <!-- Contact Form -->
+            <div class="col-lg-7">
+              <div class="card shadow-luxury border-luxury">
+                <div class="card-body p-4">
+                  <h3 class="card-title mb-4">Send us a Message</h3>
+                  <form action="https://api.web3forms.com/submit" method="POST" class="needs-validation" novalidate>
+                    <input type="hidden" name="access_key" value="89cc64df-0f60-4568-903c-05e072ad22ef">
+                    <input type="hidden" name="redirect" value="https://nestnow-1.onrender.com/contact?success=true">
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label class="form-label">
+                          <i class="fas fa-user me-2 text-luxury"></i>Name
+                        </label>
+                        <input type="text" name="name" class="form-control" required>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">
+                          <i class="fas fa-envelope me-2 text-luxury"></i>Email
+                        </label>
+                        <input type="email" name="email" class="form-control" required>
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label">
+                          <i class="fas fa-tag me-2 text-luxury"></i>Subject
+                        </label>
+                        <input type="text" name="subject" class="form-control" required>
+                      </div>
+                      <div class="col-12">
+                        <label class="form-label">
+                          <i class="fas fa-comment me-2 text-luxury"></i>Message
+                        </label>
+                        <textarea class="form-control" name="message" rows="5" required></textarea>
+                      </div>
+                      <div class="col-12">
+                        <button type="submit" class="btn btn-luxury w-100">
+                          <i class="fas fa-paper-plane me-2"></i>Send Message
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="col-lg-5">
+              <div class="card shadow-luxury border-luxury mb-4">
+                <div class="card-body p-4">
+                  <h3 class="card-title mb-4">Get in Touch</h3>
+                  <div class="d-flex mb-3">
+                    <i class="fas fa-map-marker-alt text-luxury me-3 fa-2x"></i>
+                    <div>
+                      <h5>Address</h5>
+                      <p>MIT ADT University , Loni Kalbhor <br>Pune, Maharashtra 421002</p>
+                    </div>
+                  </div>
+                  <div class="d-flex mb-3">
+                    <i class="fas fa-phone text-luxury me-3 fa-2x"></i>
+                    <div>
+                      <h5>Phone</h5>
+                      <p>+91 9209793522</p>
+                    </div>
+                  </div>
+                  <a href="https://mail.google.com/mail/u/0/#inbox" style="text-decoration: none; color: black;">
+                    <div class="d-flex mb-3">
+                      <i class="fas fa-envelope text-luxury me-3 fa-2x"></i>
+                      <div>
+                        <h5>Email</h5>
+                        <p>rautaditya2606@gmail.com</p>
+                      </div>
+                    </div>
+                  </a>
+                  <hr>
+                  <h5 class="mb-3">Follow Us</h5>
+                  <div class="social-links">
+                    <a href="https://github.com/rautaditya2606" class="me-3"><i class="fab fa-github fa-2x"></i></a>
+                    <a href="https://x.com/irly_dgaf" class="me-3"><i class="fab fa-twitter fa-2x"></i></a>
+                    <a href="https://www.instagram.com/cant.bench.220/" class="me-3"><i
+                        class="fab fa-instagram fa-2x"></i></a>
+                    <a href="https://www.linkedin.com/in/aditya-raut-3b4bba31b/" class="me-3"><i
+                        class="fab fa-linkedin fa-2x"></i></a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Office Hours -->
+              <div class="card shadow-luxury border-luxury">
+                <div class="card-body p-4">
+                  <h3 class="card-title mb-4">Office Hours</h3>
+                  <ul class="list-unstyled">
+                    <li class="mb-2">Monday - Friday: 9:00 AM - 6:00 PM</li>
+                    <li class="mb-2">Saturday: 10:00 AM - 4:00 PM</li>
+                    <li>Sunday: Closed</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <script src="/js/darkMode.js"></script>
+        <script>
+          // Auto-hide alert after 5 seconds
+          document.addEventListener('DOMContentLoaded', function () {
+            const alert = document.querySelector('.alert');
+            if (alert) {
+              setTimeout(() => {
+                alert.classList.remove('show');
+                setTimeout(() => alert.remove(), 150);
+              }, 5000);
+            }
+          });
+        </script>
   </div>
 
-  <script src="/js/darkMode.js"></script>
-  <script>
-    // Auto-hide alert after 5 seconds
-    document.addEventListener('DOMContentLoaded', function() {
-      const alert = document.querySelector('.alert');
-      if (alert) {
-        setTimeout(() => {
-          alert.classList.remove('show');
-          setTimeout(() => alert.remove(), 150);
-        }, 5000);
-      }
-    });
-  </script>
-</div>
+  <style>
+    .text-luxury {
+      color: #D4AF37;
+    }
 
-<style>
-  .text-luxury {
-    color: #D4AF37;
-  }
+    .hero-section {
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+        url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab') center/cover no-repeat;
+      color: white;
+      padding: 100px 0;
+    }
 
-  .hero-section {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-      url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab') center/cover no-repeat;
-    color: white;
-    padding: 100px 0;
-  }
+    .shadow-luxury {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
 
-  .shadow-luxury {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
+    .border-luxury {
+      border-color: #D4AF37;
+    }
 
-  .border-luxury {
-    border-color: #D4AF37;
-  }
+    .btn-luxury {
+      background: linear-gradient(45deg, #D4AF37, #FFD700);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+    }
 
-  .btn-luxury {
-    background: linear-gradient(45deg, #D4AF37, #FFD700);
-    color: white;
-    border: none;
-    padding: 12px 25px;
-  }
+    .btn-luxury:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+    }
 
-  .btn-luxury:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
-  }
+    .social-links a {
+      color: #D4AF37;
+      transition: transform 0.3s ease;
+    }
 
-  .social-links a {
-    color: #D4AF37;
-    transition: transform 0.3s ease;
-  }
-
-  .social-links a:hover {
-    transform: translateY(-3px);
-  }
-</style>
+    .social-links a:hover {
+      transform: translateY(-3px);
+    }
+  </style>

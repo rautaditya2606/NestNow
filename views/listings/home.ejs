@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="NestNow - Discover your dream home from thousands of properties at the best prices.">
+    <meta name="description"
+        content="NestNow - Discover your dream home from thousands of properties at the best prices.">
     <meta name="keywords" content="NestNow, real estate, dream home, properties, buy home, rent home">
     <meta name="author" content="NestNow Team">
     <title>NestNow - Find Your Dream Home</title>
@@ -118,10 +120,10 @@
         }
 
         .icon-card i {
-            color:  #D4AF37;
+            color: #D4AF37;
             margin-bottom: 15px;
         }
-        
+
         .loginkaro {
             position: absolute;
             top: 20px;
@@ -316,41 +318,43 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- Hero Section -->
     <div class="hero-section">
         <div class="video-overlay"></div>
-            <%if(!currentUser){%>
-                <div class="loginkaro">
-                    <a href="/login" class="btn btn-link text-white">
-                        <i class="fas fa-sign-in-alt"></i> Login
-                    </a>
-                    <a href="/signup" class="btn btn-link text-white">
-                        <i class="fas fa-user-plus"></i> Sign-up
-                    </a>
-                </div>
+        <%if(!currentUser){%>
+            <div class="loginkaro">
+                <a href="/login" class="btn btn-link text-white">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+                <a href="/signup" class="btn btn-link text-white">
+                    <i class="fas fa-user-plus"></i> Sign-up
+                </a>
+            </div>
             <%}else{%>
                 <div class="loginkaro">
                     <a href="/logout" class="btn btn-link text-white">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </a>
                     <a href="#" class="btn btn-link text-white">
-                        <i class="fas fa-sign-out-alt"></i><%=currentUser.username%>
+                        <i class="fas fa-sign-out-alt"></i>
+                        <%=currentUser.username%>
                     </a>
                 </div>
-            <%}%>
-        <video class="hero-video" autoplay muted loop playsinline>
-            <source src="/video/villa.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div class="hero-content">
-            <h1>Find Your Perfect Home Gentleman</h1>
-            <p>Discover thousands of properties that match your dreams.</p>
-            <form action="/listings">
-                <button class="btn " style="background-color: #D4AF37;" type="submit">Discover Now</button>
-            </form>
-        </div>
+                <%}%>
+                    <video class="hero-video" autoplay muted loop playsinline>
+                        <source src="/video/villa.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="hero-content">
+                        <h1>Find Your Perfect Home Gentleman</h1>
+                        <p>Discover thousands of properties that match your dreams.</p>
+                        <form action="/listings">
+                            <button class="btn " style="background-color: #D4AF37;" type="submit">Discover Now</button>
+                        </form>
+                    </div>
     </div>
 
     <!-- Featured Properties -->
@@ -358,26 +362,31 @@
         <div class="container">
             <h2 class="text-center mb-5">Featured Properties</h2>
             <div class="row g-4">
-                <% if (listings && listings.length > 0) { %>
-                    <% listings.forEach(listing => { %>
+                <% if (listings && listings.length> 0) { %>
+                    <% listings.forEach(listing=> { %>
                         <div class="col-md-4">
-                            <a href="/listings/<%= listing._id %>"  style="text-decoration: none;" >
+                            <a href="/listings/<%= listing._id %>" style="text-decoration: none;">
                                 <div class="card feature-card">
                                     <img src="<%= listing.image.url %>" class="card-img-top" alt="Property Image">
                                     <div class="card-body">
-                                        <h5 class="card-title"><%= listing.title %></h5>
-                                        <p class="card-text  fw-bold" style="color:  #D4AF37;" >₹<%= listing.price %></p>
-                                        <p class="card-text"><i class="fas fa-map-marker-alt"></i> <%= listing.location %></p>
+                                        <h5 class="card-title">
+                                            <%= listing.title %>
+                                        </h5>
+                                        <p class="card-text  fw-bold" style="color:  #D4AF37;">₹<%= listing.price %>
+                                        </p>
+                                        <p class="card-text"><i class="fas fa-map-marker-alt"></i>
+                                            <%= listing.location %>
+                                        </p>
                                     </div>
                                 </div>
                             </a>
                         </div>
-                    <% }) %>
-                <% } else { %>
-                    <div class="col-12 text-center">
-                        <p>No listings available at the moment.</p>
-                    </div>
-                <% } %>
+                        <% }) %>
+                            <% } else { %>
+                                <div class="col-12 text-center">
+                                    <p>No listings available at the moment.</p>
+                                </div>
+                                <% } %>
             </div>
         </div>
     </section>
@@ -388,7 +397,7 @@
             <h2 class="text-center mb-5">Why Choose NestNow</h2>
             <div class="row g-4">
                 <div class="col-md-4">
-                    <a href="/listings" style="text-decoration: none; color: #212529; " >
+                    <a href="/listings" style="text-decoration: none; color: #212529; ">
                         <div class="icon-card">
                             <i class="fas fa-home fa-3x"></i>
                             <h4>Wide Range of Properties</h4>
@@ -404,7 +413,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <a href="/contact" style="text-decoration: none; color: #232b2b; " >
+                    <a href="/contact" style="text-decoration: none; color: #232b2b; ">
                         <div class="icon-card">
                             <i class="fas fa-user-tie fa-3x"></i>
                             <h4>Expert Support</h4>
@@ -416,41 +425,44 @@
         </div>
     </section>
     <br>
-<footer id="content" class="bg-light border-top py-4">
-  <div class="container">
-    <div class="row text-center text-md-start align-items-center">
-      <div class="col-md-4 mb-3 mb-md-0">
-        <div class="f-info-social d-flex justify-content-center justify-content-md-start gap-3">
-          <a href="https://www.instagram.com/cant.bench.220/" target="_blank" class="text-dark" aria-label="Instagram">
-            <i class="fa-brands fa-instagram fa-lg"></i>
-          </a>
-          <a href="https://x.com/RautAditya2606" target="_blank" class="text-dark" aria-label="Twitter">
-            <i class="fa-brands fa-twitter fa-lg"></i>
-          </a>
-          <a href="https://www.linkedin.com/in/aditya-raut-3b4bba31b/" target="_blank" class="text-dark" aria-label="LinkedIn">
-            <i class="fa-brands fa-linkedin fa-lg"></i>
-          </a>
-        </div>
-      </div>
+    <footer id="content" class="bg-light border-top py-4">
+        <div class="container">
+            <div class="row text-center text-md-start align-items-center">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="f-info-social d-flex justify-content-center justify-content-md-start gap-3">
+                        <a href="https://www.instagram.com/cant.bench.220/" target="_blank" class="text-dark"
+                            aria-label="Instagram">
+                            <i class="fa-brands fa-instagram fa-lg"></i>
+                        </a>
+                        <a href="https://x.com/RautAditya2606" target="_blank" class="text-dark" aria-label="Twitter">
+                            <i class="fa-brands fa-twitter fa-lg"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/aditya-raut-3b4bba31b/" target="_blank" class="text-dark"
+                            aria-label="LinkedIn">
+                            <i class="fa-brands fa-linkedin fa-lg"></i>
+                        </a>
+                    </div>
+                </div>
 
-      <div class="col-md-4 mb-3 mb-md-0">
-        <div class="f-info-co text-center">
-          &copy;NestNow Private Limited
-        </div>
-      </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="f-info-co text-center">
+                        &copy;NestNow Private Limited
+                    </div>
+                </div>
 
-      <div class="col-md-4">
-        <div class="f-info-links d-flex justify-content-center justify-content-md-end gap-3">
-          <a href="/listings/privacy" class="text-decoration-none text-dark">Privacy Policy</a>
-          <a href="/listings/tnc" class="text-decoration-none text-dark">Terms & Conditions</a>
+                <div class="col-md-4">
+                    <div class="f-info-links d-flex justify-content-center justify-content-md-end gap-3">
+                        <a href="/listings/privacy" class="text-decoration-none text-dark">Privacy Policy</a>
+                        <a href="/listings/tnc" class="text-decoration-none text-dark">Terms & Conditions</a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <script src="/js/darkMode.js"></script>
-</footer>
+        <script src="/js/darkMode.js"></script>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/darkMode.js"></script>
 </body>
+
 </html>

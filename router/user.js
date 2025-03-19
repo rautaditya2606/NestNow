@@ -7,11 +7,11 @@ const userController = require("../controllers/user.js");
 
 
 //signup form
-router.get("/signup",(userController.renderSignup));
+router.get("/signup", (userController.renderSignup));
 
 
 //signup route
-router.post("/signup",(userController.signup));
+router.post("/signup", (userController.signup));
 
 
 //login form

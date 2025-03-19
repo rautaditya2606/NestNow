@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;  // Now Schema is defined
 
 const reviewSchema = new Schema({
     name: {
-        type:Schema.Types.ObjectId,
-        ref : "User",
+        type: Schema.Types.ObjectId,
+        ref: "User",
     },
     comment: String,
     rating: {

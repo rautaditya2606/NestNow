@@ -1,7 +1,7 @@
 const Listing = require("../models/listing.js");
 const validateAndFindListing = require("../utils/listingUtils.js");
 
-module.exports.index= async (req, res) => {
+module.exports.index = async (req, res) => {
     try {
         const allListings = await Listing.find({}).populate("review");
         res.render("./listings/index.ejs", { allListings });
@@ -12,14 +12,14 @@ module.exports.index= async (req, res) => {
     }
 };
 
-module.exports.renderNew =   (req, res) => {
+module.exports.renderNew = (req, res) => {
     res.render("./listings/new.ejs");
 };
 
 module.exports.profile = async (req, res) => {
     try {
         const user = req.user;
-        console.log("User ID:", user._id); 
+        console.log("User ID:", user._id);
 
         // Fetch listings with reviews populated
         const listings = await Listing.find({ "owner._id": user._id.toString() })
@@ -30,15 +30,15 @@ module.exports.profile = async (req, res) => {
                 }
             });
 
-        console.log("Found listings:", listings.length); 
+        console.log("Found listings:", listings.length);
 
         // Calculate total reviews
         const totalReviews = listings.reduce((total, listing) => {
-            console.log("Listing ID:", listing._id, "Reviews:", listing.review); 
+            console.log("Listing ID:", listing._id, "Reviews:", listing.review);
             return total + (listing.review ? listing.review.length : 0);
         }, 0);
 
-        console.log("Total Reviews:", totalReviews); 
+        console.log("Total Reviews:", totalReviews);
 
         res.render("./listings/profile.ejs", {
             user,
@@ -111,7 +111,7 @@ module.exports.create = async (req, res) => {
 };
 
 
-module.exports.show =  async (req, res) => {
+module.exports.show = async (req, res) => {
     try {
         const { error, listing } = await validateAndFindListing(req.params.id, req, res);
         if (error) return res.redirect("/listings");
@@ -139,7 +139,7 @@ module.exports.renderEdit = async (req, res) => {
 module.exports.update = async (req, res) => {
     try {
         let { id } = req.params;
-        
+
         // Validate listing exists and user has permission
         const { error, listing } = await validateAndFindListing(id, req, res);
         if (error) return res.redirect("/listings");

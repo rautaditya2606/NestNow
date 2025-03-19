@@ -6,9 +6,9 @@ const { isLoggedIn } = require("../middleware.js");
 const reviewController = require("../controllers/review.js");
 
 // Create a review
-router.post("/", isLoggedIn,(reviewController.new));
+router.post("/", isLoggedIn, (reviewController.new));
 
 // Delete a review
-router.delete("/:reviewId", isLoggedIn,(reviewController.delete) );
+router.delete("/:reviewId", isLoggedIn, (reviewController.delete));
 
 module.exports = router;

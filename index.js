@@ -1,5 +1,5 @@
 require("dotenv").config();
-if(process.env.NODE_ENV != "production"){
+if (process.env.NODE_ENV != "production") {
   require('dotenv').config();
 };
 
@@ -22,7 +22,7 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
-const { isLoggedIn ,isOwner } = require("./middleware.js");
+const { isLoggedIn, isOwner } = require("./middleware.js");
 const MongoStore = require("connect-mongo");
 const dburl = process.env.ATLASDB_URL;
 
@@ -41,8 +41,8 @@ app.use(express.static(path.join(__dirname, "/public")));
 const store = MongoStore.create({
   mongoUrl: dburl,
   touchAfter: 24 * 60 * 60,
-  crypto:{
-    secret : process.env.SECRET,
+  crypto: {
+    secret: process.env.SECRET,
   }
 });
 
@@ -51,7 +51,7 @@ const sessionOptions = {
   store,
   secret: process.env.SECRET,
   resave: false,
-  saveUninitialized: false, 
+  saveUninitialized: false,
   cookie: {
     expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
     maxAge: 7 * 24 * 60 * 60 * 1000,
@@ -77,22 +77,22 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
   // current user available in templates
   res.locals.currentUser = req.user;
-  
+
   // flash messages 
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
-  
+
   // Store original url in session if it's not a login or logout request
   if (!['/login', '/logout', '/register'].includes(req.originalUrl)) {
     req.session.previousUrl = req.originalUrl;
   }
-  
+
   next();
 });
 
 // Route handlers
 app.use("/listings", listingRouter);
-app.use("/listings/:id/reviews", reviewRouter); 
+app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
 // MongoDB Connection
@@ -118,7 +118,7 @@ app.get("/", async (req, res) => {
   }
 });
 
-app.get("/about",(req,res)=>{
+app.get("/about", (req, res) => {
   res.render("./listings/about.ejs");
 });
 
@@ -127,10 +127,10 @@ app.get("/contact", (req, res) => {
   res.render("./listings/contact.ejs", { success });
 });
 
-app.get("/home",isLoggedIn, (req, res) => {
+app.get("/home", isLoggedIn, (req, res) => {
   // const currUser = req.user;
   res.render("./listings/home.ejs");
-  
+
 });
 
 // Add this before the 404 Error Middleware
@@ -140,7 +140,7 @@ app.get("/search", async (req, res) => {
     if (!q) {
       return res.redirect("/listings");
     }
-    
+
     const searchResults = await Listing.find({
       $or: [
         { title: { $regex: q, $options: "i" } },
@@ -148,10 +148,10 @@ app.get("/search", async (req, res) => {
         { description: { $regex: q, $options: "i" } }
       ]
     });
-    
-    res.render("./listings/search.ejs", { 
-      listings: searchResults, 
-      searchQuery: q 
+
+    res.render("./listings/search.ejs", {
+      listings: searchResults,
+      searchQuery: q
     });
   } catch (err) {
     console.error("Search error:", err);

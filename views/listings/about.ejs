@@ -1,106 +1,109 @@
 <% layout("/layouts/boilerplate") %>
 
-<div class="about-page">
-  <!-- Hero Section -->
-  <div class="hero-section text-center py-5">
-    <div class="container">
-      <h1 class="display-4 fw-bold text-luxury">About NestNow</h1>
-      <p class="lead">Discover Luxury Living at Its Finest</p>
+  <div class="about-page">
+    <!-- Hero Section -->
+    <div class="hero-section text-center py-5">
+      <div class="container">
+        <h1 class="display-4 fw-bold text-luxury">About NestNow</h1>
+        <p class="lead">Discover Luxury Living at Its Finest</p>
+      </div>
     </div>
+
+    <!-- Story Section -->
+    <section class="story-section py-5">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf" alt="Luxury Home"
+              class="img-fluid rounded shadow-lg">
+          </div>
+          <div class="col-lg-6">
+            <h2 class="h3 text-luxury mb-4">Our Story</h2>
+            <p class="lead mb-4">At NestNow, we believe in transforming the way people experience luxury living. Founded
+              in 2023, our platform connects discerning travelers with exceptional properties worldwide.</p>
+            <p>Our commitment to excellence and attention to detail ensures that every property listed meets our
+              stringent standards of luxury and comfort.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section py-5 bg-light">
+      <div class="container">
+        <h2 class="text-center text-luxury mb-5">Why Choose NestNow</h2>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="feature-card text-center p-4">
+              <i class="fas fa-crown fa-3x text-luxury mb-3"></i>
+              <h3 class="h5">Curated Properties</h3>
+              <p>Handpicked luxury properties that meet our elite standards.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="feature-card text-center p-4">
+              <i class="fas fa-concierge-bell fa-3x text-luxury mb-3"></i>
+              <h3 class="h5">Premium Service</h3>
+              <p>24/7 concierge service for all your needs.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="feature-card text-center p-4">
+              <i class="fas fa-shield-alt fa-3x text-luxury mb-3"></i>
+              <h3 class="h5">Secure Booking</h3>
+              <p>Safe and secure transactions with buyer protection.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section py-5">
+      <div class="container text-center">
+        <h2 class="mb-4">Ready to Experience Luxury?</h2>
+        <a href="/listings" class="btn btn-luxury btn-lg">Browse Properties</a>
+      </div>
+    </section>
+    <script src="/js/darkMode.js"></script>
   </div>
 
-  <!-- Story Section -->
-  <section class="story-section py-5">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-6 mb-4 mb-lg-0">
-          <img src="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf" alt="Luxury Home" class="img-fluid rounded shadow-lg">
-        </div>
-        <div class="col-lg-6">
-          <h2 class="h3 text-luxury mb-4">Our Story</h2>
-          <p class="lead mb-4">At NestNow, we believe in transforming the way people experience luxury living. Founded in 2023, our platform connects discerning travelers with exceptional properties worldwide.</p>
-          <p>Our commitment to excellence and attention to detail ensures that every property listed meets our stringent standards of luxury and comfort.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  <style>
+    .text-luxury {
+      color: #D4AF37;
+    }
 
-  <!-- Features Section -->
-  <section class="features-section py-5 bg-light">
-    <div class="container">
-      <h2 class="text-center text-luxury mb-5">Why Choose NestNow</h2>
-      <div class="row g-4">
-        <div class="col-md-4">
-          <div class="feature-card text-center p-4">
-            <i class="fas fa-crown fa-3x text-luxury mb-3"></i>
-            <h3 class="h5">Curated Properties</h3>
-            <p>Handpicked luxury properties that meet our elite standards.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="feature-card text-center p-4">
-            <i class="fas fa-concierge-bell fa-3x text-luxury mb-3"></i>
-            <h3 class="h5">Premium Service</h3>
-            <p>24/7 concierge service for all your needs.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="feature-card text-center p-4">
-            <i class="fas fa-shield-alt fa-3x text-luxury mb-3"></i>
-            <h3 class="h5">Secure Booking</h3>
-            <p>Safe and secure transactions with buyer protection.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    .hero-section {
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750') center/cover no-repeat;
+      color: white;
+      padding: 100px 0;
+    }
 
-  <!-- CTA Section -->
-  <section class="cta-section py-5">
-    <div class="container text-center">
-      <h2 class="mb-4">Ready to Experience Luxury?</h2>
-      <a href="/listings" class="btn btn-luxury btn-lg">Browse Properties</a>
-    </div>
-  </section>
-  <script src="/js/darkMode.js"></script>
-</div>
+    .feature-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
 
-<style>
-.text-luxury {
-  color: #D4AF37;
-}
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
 
-.hero-section {
-  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750') center/cover no-repeat;
-  color: white;
-  padding: 100px 0;
-}
+    .btn-luxury {
+      background: linear-gradient(45deg, #D4AF37, #FFD700);
+      border: none;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 30px;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+    }
 
-.feature-card {
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease;
-}
-
-.feature-card:hover {
-  transform: translateY(-5px);
-}
-
-.btn-luxury {
-  background: linear-gradient(45deg, #D4AF37, #FFD700);
-  border: none;
-  color: white;
-  padding: 12px 30px;
-  border-radius: 30px;
-  text-transform: uppercase;
-  font-weight: bold;
-  letter-spacing: 1px;
-  transition: all 0.3s ease;
-}
-
-.btn-luxury:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(212,175,55,0.3);
-}
-</style>
+    .btn-luxury:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+    }
+  </style>

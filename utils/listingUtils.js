@@ -6,7 +6,7 @@ async function validateAndFindListing(id, req, res) {
         req.flash("error", "Invalid listing ID");
         return { error: true };
     }
-    
+
     const listing = await Listing.findById(id)
         .populate({
             path: "review",
@@ -20,7 +20,7 @@ async function validateAndFindListing(id, req, res) {
         req.flash("error", "Nest does not exist");
         return { error: true };
     }
-    
+
     return { listing };
 }
 
