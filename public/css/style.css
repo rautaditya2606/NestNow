@@ -880,7 +880,7 @@ body {
   border-radius: 20px;
   outline: none;
   color: var(--luxury-gold);
-  background: var(--background-color);
+  background: #ffffff;
   box-shadow: 0 2px 5px #D4AF37(212, 175, 55, 0.2);
   transition: all 0.3s ease;
 }
