@@ -70,14 +70,18 @@
                        name="image" 
                        class="form-control form-control-lg"
                        accept="image/*"
-                       required>
-                      <div class="mt-2">
-                        <button type="button" 
-                                class="btn btn-outline-luxury" 
-                                onclick="previewImage()">
-                          <i class="fas fa-eye me-1"></i>Preview
-                        </button>
-                      </div>
+                       required
+                       onchange="validateImage(this)">
+                <div id="imageError" class="text-danger mt-1" style="display: none;">
+                  File size too large! Maximum size is 5MB
+                </div>
+                <div class="mt-2">
+                  <button type="button" 
+                          class="btn btn-outline-luxury" 
+                          onclick="previewImage()">
+                    <i class="fas fa-eye me-1"></i>Preview
+                  </button>
+                </div>
                 <div class="valid-feedback"><i class="fas fa-check-circle"></i> Image looks perfect!</div>
                 <div class="invalid-feedback"><i class="fas fa-exclamation-circle"></i> Please add an image.</div>
               </div>
@@ -214,4 +218,16 @@
     }
   });
 });
+
+  function validateImage(input) {
+    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    const errorDiv = document.getElementById('imageError');
+    
+    if (input.files[0].size > maxSize) {
+        errorDiv.style.display = 'block';
+        input.value = ''; // Clear the input
+    } else {
+        errorDiv.style.display = 'none';
+    }
+  }
 </script>
