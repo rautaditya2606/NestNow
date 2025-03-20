@@ -31,4 +31,7 @@ router.post("/login",
 //logout route
 router.get("/logout", (userController.logout));
 
+//delete user
+router.delete("/delete", userController.delete);
+
 module.exports = router;

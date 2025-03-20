@@ -52,3 +52,15 @@ module.exports.logout = (req, res) => {
     req.flash("success", "Logged out");
     res.redirect("/");
 };
+
+module.exports.delete = async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.user._id);
+        req.flash("success", "User deleted");
+        res.redirect("/listings");
+    }
+    catch (e) {
+        req.flash("error", e.message);
+        res.redirect("/profile");
+    }
+}
