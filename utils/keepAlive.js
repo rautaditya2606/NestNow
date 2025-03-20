@@ -10,6 +10,6 @@ const pingServer = () => {
 };
 
 // Ping every 14 minutes (Render free tier sleep after 15 minutes of inactivity)
-setInterval(pingServer, 14 * 60 * 1000);
+setInterval(pingServer, 4 * 60 * 1000);
 
 module.exports = pingServer;
