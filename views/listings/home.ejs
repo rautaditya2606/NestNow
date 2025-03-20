@@ -14,22 +14,36 @@
     <style>
         /* General */
         body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
             font-family: Arial, sans-serif;
             line-height: 1.6;
             background-color: #f8f9fa;
             color: #212529;
         }
 
+        html,
+        body {
+            height: -webkit-fill-available;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
         /* Hero Section */
         .hero-section {
             position: relative;
-            height: 80vh;
+            height: 100vh;
+            width: 100%;
             color: white;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 2rem;
+            margin-bottom: 0;
+            min-height: -webkit-fill-available;
+            /* Add this for iOS */
         }
 
         .video-overlay {
@@ -38,7 +52,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4));
+            object-fit: cover;
             z-index: 1;
         }
 
@@ -47,19 +61,21 @@
             z-index: 2;
             max-width: 800px;
             text-align: center;
+            border-radius: 10px;
+            padding: 10px;
         }
 
         .hero-content h1 {
             font-size: 4rem;
             font-weight: 700;
             margin-bottom: 1.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
         }
 
         .hero-content p {
             font-size: 1.25rem;
             margin-bottom: 1.5rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
         }
 
         .hero-content a {
@@ -67,6 +83,7 @@
             font-weight: 600;
             margin-right: 10px;
             text-decoration: none;
+            position: absolute;
         }
 
         .hero-content a:hover {
@@ -75,15 +92,26 @@
 
         .hero-video {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            filter: brightness(1.1);
+            z-index: -1;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            /* Add this for iOS */
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            height: -webkit-fill-available;
+            object-fit: cover;
+            z-index: -1;
         }
 
         /* Featured Properties */
@@ -143,13 +171,15 @@
             font-weight: 600;
             padding: 8px 16px;
             border-radius: 25px;
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(0, 0, 0, 0.3);
+            /* Dark translucent overlay */
             backdrop-filter: blur(5px);
             transition: all 0.3s ease;
         }
 
         .loginkaro a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Dark translucent overlay */
             transform: translateY(-2px);
         }
 
@@ -177,7 +207,13 @@
 
         @media (max-width: 768px) {
             .hero-section {
-                height: 70vh;
+                height: 100vh;
+                min-height: -webkit-fill-available;
+            }
+
+            .hero-video {
+                height: 100vh;
+                min-height: -webkit-fill-available;
             }
 
             .hero-content h1 {
@@ -316,6 +352,85 @@
                 gap: 5px;
             }
         }
+
+        @media (max-height: 600px) and (orientation: landscape) {
+            .hero-section {
+                height: 100vh;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                height: 100vh;
+                height: -webkit-fill-available;
+                min-height: -webkit-fill-available;
+            }
+
+            .hero-video {
+                position: fixed;
+                height: 100vh;
+                height: -webkit-fill-available;
+                min-height: -webkit-fill-available;
+            }
+        }
+
+        @supports (-webkit-touch-callout: none) {
+
+            .hero-section,
+            .hero-video {
+                height: -webkit-fill-available;
+            }
+        }
+    </style>
+    <style>
+        /* General */
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* Remove all -webkit-fill-available and fixed positioning */
+        @media (max-width: 768px) {
+            .hero-section {
+                height: 100vh;
+            }
+
+            .hero-video {
+                height: 100%;
+            }
+        }
     </style>
 </head>
 
@@ -344,8 +459,9 @@
                     </a>
                 </div>
                 <%}%>
-                    <video class="hero-video" autoplay muted loop playsinline>
-                        <source src="/video/villa.mp4" type="video/mp4">
+                    <video class="hero-video" autoplay muted loop playsinline preload="auto">
+                        <source src="https://videos.pexels.com/video-files/8435627/8435627-uhd_2560_1440_30fps.mp4"
+                            type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                     <div class="hero-content">
