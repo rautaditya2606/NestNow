@@ -1,5 +1,5 @@
 import { showLoader, hideLoader } from './loader.js';
-
+//hello
 // Initial load handler
 if (window.location.pathname === '/loader') {
     window.addEventListener('load', () => {
