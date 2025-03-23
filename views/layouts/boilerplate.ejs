@@ -21,6 +21,18 @@
 </head>
 
 <body>
+    <!-- Loader SVG -->
+    <svg class="pl" width="240" height="240" viewBox="0 0 240 240">
+        <circle class="pl__ring pl__ring--a" cx="120" cy="120" r="105" fill="none" stroke="#000" stroke-width="20"
+            stroke-dasharray="0 660" stroke-dashoffset="-330" stroke-linecap="round"></circle>
+        <circle class="pl__ring pl__ring--b" cx="120" cy="120" r="35" fill="none" stroke="#000" stroke-width="20"
+            stroke-dasharray="0 220" stroke-dashoffset="-110" stroke-linecap="round"></circle>
+        <circle class="pl__ring pl__ring--c" cx="85" cy="120" r="70" fill="none" stroke="#000" stroke-width="20"
+            stroke-dasharray="0 440" stroke-linecap="round"></circle>
+        <circle class="pl__ring pl__ring--d" cx="155" cy="120" r="70" fill="none" stroke="#000" stroke-width="20"
+            stroke-dasharray="0 440" stroke-linecap="round"></circle>
+    </svg>
+    
     <%- include ("../includes/navbar.ejs") %>
 
         <div class="container">
@@ -32,6 +44,37 @@
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
             <script src="/js/script.js"></script>
             <script src="/js/darkMode.js"></script>
+            <script>
+                // Inline loader logic to avoid module issues
+                const showLoader = () => {
+                    const loader = document.querySelector('.pl');
+                    if (loader) loader.style.display = 'block';
+                };
+
+                const hideLoader = () => {
+                    const loader = document.querySelector('.pl');
+                    if (loader) loader.style.display = 'none';
+                };
+
+                // Hide loader on initial load
+                window.addEventListener('load', hideLoader);
+
+                // Show loader on navigation
+                document.addEventListener('click', (e) => {
+                    if (e.target.tagName === 'A' || 
+                        (e.target.tagName === 'BUTTON' && e.target.classList.contains('create-listing'))) {
+                        e.preventDefault();
+                        showLoader();
+                        setTimeout(() => {
+                            if (e.target.href) {
+                                window.location.href = e.target.href;
+                            } else if (e.target.form) {
+                                e.target.form.submit();
+                            }
+                        }, 1000);
+                    }
+                });
+            </script>
 </body>
 
 </html>
