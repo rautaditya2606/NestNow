@@ -21,6 +21,6 @@ Backend: Node.js, Express
 
 Database: MongoDB
 
-Authentication: JWT (JSON Web Tokens)
+Authentication: Passprt
 
 Views: EJS (Embedded JavaScript Templates)
