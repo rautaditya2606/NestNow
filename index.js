@@ -25,7 +25,6 @@ const User = require("./models/user");
 const { isLoggedIn, isOwner } = require("./middleware.js");
 const MongoStore = require("connect-mongo");
 const dburl = process.env.ATLASDB_URL;
-const pingServer = require('./utils/keepAlive');
 
 
 
@@ -36,10 +35,8 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
-app.use('/health', require('./routes/health'));
 
-//ping server
-pingServer();
+
 
 //mongo session store
 const store = MongoStore.create({
