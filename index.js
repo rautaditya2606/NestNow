@@ -48,7 +48,12 @@ const store = MongoStore.create({
   mongoOptions: {
     serverSelectionTimeoutMS: 60000,
     socketTimeoutMS: 45000,
-    maxPoolSize: 10
+    maxPoolSize: 10,
+    ssl: true,
+    tls: true,
+    tlsAllowInvalidHostnames: false,
+    tlsAllowInvalidCertificates: false,
+    minPoolSize: 0
   }
 });
 
@@ -107,7 +112,12 @@ async function connectWithRetry() {
     heartbeatFrequencyMS: 2000,
     socketTimeoutMS: 45000,
     maxPoolSize: 10,
-    bufferCommands: true
+    bufferCommands: true,
+    ssl: true,
+    tls: true,
+    tlsAllowInvalidHostnames: false,
+    tlsAllowInvalidCertificates: false,
+    minPoolSize: 0
   };
 
   try {
