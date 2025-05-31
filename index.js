@@ -44,6 +44,11 @@ const store = MongoStore.create({
   touchAfter: 24 * 60 * 60,
   crypto: {
     secret: process.env.SECRET,
+  },
+  mongoOptions: {
+    retryWrites: true,
+    w: "majority",
+    family: 4
   }
 });
 
@@ -99,11 +104,12 @@ app.use("/", userRouter);
 async function main() {
   try {
     await mongoose.connect(dburl, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      retryWrites: true,
+      w: "majority",
+      minPoolSize: 1,
       maxPoolSize: 10,
-      serverSelectionTimeoutMS: 5000,
-      socketTimeoutMS: 45000,
+      serverSelectionTimeoutMS: 30000,
+      family: 4
     });
     console.log("MongoDB Connection Successful");
   } catch (err) {
@@ -183,6 +189,14 @@ app.use((err, req, res, next) => {
 });
 
 // Server Listen
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
+}).on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`Port ${port} is already in use. Please try another port or kill the process using this port.`);
+    process.exit(1);
+  } else {
+    console.error('Server error:', err);
+    process.exit(1);
+  }
 });

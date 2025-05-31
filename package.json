@@ -1,13 +1,13 @@
 {
   "engines": {
-    "node": "22.11.0"
+    "node": ">=18.0.0"
   },
   "name": "major-project",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
+    "start": "node index.js",
     "build": "npm install",
     "vercel-build": "npm run build",
     "dev": "nodemon index.js"
