@@ -46,15 +46,9 @@ const store = MongoStore.create({
     secret: process.env.SECRET,
   },
   mongoOptions: {
-    retryWrites: true,
-    w: "majority",
-    minPoolSize: 1,
-    maxPoolSize: 10,
     serverSelectionTimeoutMS: 60000,
-    heartbeatFrequencyMS: 2000,
-    family: 4,
-    connectTimeoutMS: 30000,
-    socketTimeoutMS: 45000
+    socketTimeoutMS: 45000,
+    maxPoolSize: 10
   }
 });
 
@@ -107,38 +101,51 @@ app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
 // MongoDB Connection
-async function main() {
+async function connectWithRetry() {
+  const options = {
+    serverSelectionTimeoutMS: 60000,
+    heartbeatFrequencyMS: 2000,
+    socketTimeoutMS: 45000,
+    maxPoolSize: 10,
+    bufferCommands: true
+  };
+
   try {
-    await mongoose.connect(dburl, {
-      retryWrites: true,
-      w: "majority",
-      minPoolSize: 1,
-      maxPoolSize: 10,
-      serverSelectionTimeoutMS: 60000,
-      heartbeatFrequencyMS: 2000,
-      family: 4,
-      connectTimeoutMS: 30000,
-      socketTimeoutMS: 45000
-    });
+    await mongoose.connect(dburl, options);
     console.log("MongoDB Connection Successful");
-
-    // Handle connection events
-    mongoose.connection.on('error', err => {
-      console.error('MongoDB connection error:', err);
-    });
-
-    mongoose.connection.on('disconnected', () => {
-      console.log('MongoDB disconnected. Attempting to reconnect...');
-    });
-
-    mongoose.connection.on('reconnected', () => {
-      console.log('MongoDB reconnected');
-    });
-
+    return true;
   } catch (err) {
     console.error("MongoDB Connection Error:", err);
-    process.exit(1);
+    return false;
   }
+}
+
+async function main() {
+  // Try to connect up to 5 times
+  for (let i = 0; i < 5; i++) {
+    const connected = await connectWithRetry();
+    if (connected) {
+      break;
+    }
+    if (i < 4) { // Don't wait after the last attempt
+      console.log(`Retrying connection in 5 seconds... (Attempt ${i + 2}/5)`);
+      await new Promise(resolve => setTimeout(resolve, 5000));
+    }
+  }
+
+  // Set up connection event handlers
+  mongoose.connection.on('error', err => {
+    console.error('MongoDB connection error:', err);
+  });
+
+  mongoose.connection.on('disconnected', () => {
+    console.log('MongoDB disconnected. Attempting to reconnect...');
+    connectWithRetry(); // Try to reconnect
+  });
+
+  mongoose.connection.on('reconnected', () => {
+    console.log('MongoDB reconnected successfully');
+  });
 }
 
 main();
@@ -146,11 +153,18 @@ main();
 // Home Route
 app.get("/", async (req, res) => {
   try {
-    const listings = await Listing.find({}).limit(6);
+    const listings = await Promise.race([
+      Listing.find({}).limit(6),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Query timeout')), 15000)
+      )
+    ]);
     res.render("listings/home.ejs", { listings });
   } catch (err) {
     console.error("Error fetching listings:", err);
-    res.render("listings/home.ejs", { listings: [] });
+    if (!res.headersSent) {
+      res.render("listings/home.ejs", { listings: [] });
+    }
   }
 });
 
