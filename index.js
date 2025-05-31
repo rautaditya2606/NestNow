@@ -54,10 +54,9 @@ const sessionOptions = {
   resave: false,
   saveUninitialized: false,
   cookie: {
-    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
     maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
-
+    secure: process.env.NODE_ENV === "production"
   },
   rolling: true
 };
@@ -99,10 +98,17 @@ app.use("/", userRouter);
 // MongoDB Connection
 async function main() {
   try {
-    await mongoose.connect(dburl);
-    console.log("Connection Successful");
+    await mongoose.connect(dburl, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      maxPoolSize: 10,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    });
+    console.log("MongoDB Connection Successful");
   } catch (err) {
-    console.log("MongoDB Connection Error:", err);
+    console.error("MongoDB Connection Error:", err);
+    process.exit(1);
   }
 }
 
@@ -171,7 +177,9 @@ app.use((err, req, res, next) => {
   console.error(err);
   const { statusCode = 500 } = err;
   if (!err.message) err.message = "Oh No, Something Went Wrong!";
-  res.status(statusCode).render("./listings/error", { err });
+  if (!res.headersSent) {
+    res.status(statusCode).render("./listings/error", { err });
+  }
 });
 
 // Server Listen
