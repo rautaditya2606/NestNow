@@ -46,14 +46,14 @@ const store = MongoStore.create({
     secret: process.env.SECRET,
   },
   mongoOptions: {
-    serverSelectionTimeoutMS: 60000,
+    serverSelectionTimeoutMS: 30000,
     socketTimeoutMS: 45000,
     maxPoolSize: 10,
-    ssl: true,
+    minPoolSize: 0,
+    retryWrites: true,
+    w: "majority",
     tls: true,
-    tlsAllowInvalidHostnames: false,
-    tlsAllowInvalidCertificates: false,
-    minPoolSize: 0
+    tlsInsecure: false
   }
 });
 
@@ -108,16 +108,15 @@ app.use("/", userRouter);
 // MongoDB Connection
 async function connectWithRetry() {
   const options = {
-    serverSelectionTimeoutMS: 60000,
-    heartbeatFrequencyMS: 2000,
+    serverSelectionTimeoutMS: 30000,
     socketTimeoutMS: 45000,
     maxPoolSize: 10,
-    bufferCommands: true,
-    ssl: true,
+    minPoolSize: 0,
+    bufferCommands: false,
+    retryWrites: true,
+    w: "majority",
     tls: true,
-    tlsAllowInvalidHostnames: false,
-    tlsAllowInvalidCertificates: false,
-    minPoolSize: 0
+    tlsInsecure: false
   };
 
   try {
@@ -131,16 +130,30 @@ async function connectWithRetry() {
 }
 
 async function main() {
-  // Try to connect up to 5 times
-  for (let i = 0; i < 5; i++) {
-    const connected = await connectWithRetry();
-    if (connected) {
-      break;
+  let retryCount = 0;
+  const maxRetries = 5;
+  const retryDelay = 5000;
+
+  while (retryCount < maxRetries) {
+    try {
+      const connected = await connectWithRetry();
+      if (connected) {
+        console.log('Successfully connected to MongoDB');
+        break;
+      }
+    } catch (err) {
+      console.error(`Connection attempt ${retryCount + 1} failed:`, err.message);
+      if (retryCount < maxRetries - 1) {
+        console.log(`Waiting ${retryDelay/1000} seconds before retry...`);
+        await new Promise(resolve => setTimeout(resolve, retryDelay));
+      }
     }
-    if (i < 4) { // Don't wait after the last attempt
-      console.log(`Retrying connection in 5 seconds... (Attempt ${i + 2}/5)`);
-      await new Promise(resolve => setTimeout(resolve, 5000));
-    }
+    retryCount++;
+  }
+
+  if (retryCount === maxRetries) {
+    console.error('Failed to connect to MongoDB after maximum retry attempts');
+    process.exit(1);
   }
 
   // Set up connection event handlers
