@@ -48,7 +48,13 @@ const store = MongoStore.create({
   mongoOptions: {
     retryWrites: true,
     w: "majority",
-    family: 4
+    minPoolSize: 1,
+    maxPoolSize: 10,
+    serverSelectionTimeoutMS: 60000,
+    heartbeatFrequencyMS: 2000,
+    family: 4,
+    connectTimeoutMS: 30000,
+    socketTimeoutMS: 45000
   }
 });
 
@@ -108,10 +114,27 @@ async function main() {
       w: "majority",
       minPoolSize: 1,
       maxPoolSize: 10,
-      serverSelectionTimeoutMS: 30000,
-      family: 4
+      serverSelectionTimeoutMS: 60000,
+      heartbeatFrequencyMS: 2000,
+      family: 4,
+      connectTimeoutMS: 30000,
+      socketTimeoutMS: 45000
     });
     console.log("MongoDB Connection Successful");
+
+    // Handle connection events
+    mongoose.connection.on('error', err => {
+      console.error('MongoDB connection error:', err);
+    });
+
+    mongoose.connection.on('disconnected', () => {
+      console.log('MongoDB disconnected. Attempting to reconnect...');
+    });
+
+    mongoose.connection.on('reconnected', () => {
+      console.log('MongoDB reconnected');
+    });
+
   } catch (err) {
     console.error("MongoDB Connection Error:", err);
     process.exit(1);
