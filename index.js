@@ -44,16 +44,6 @@ const store = MongoStore.create({
   touchAfter: 24 * 60 * 60,
   crypto: {
     secret: process.env.SECRET,
-  },
-  mongoOptions: {
-    serverSelectionTimeoutMS: 30000,
-    socketTimeoutMS: 45000,
-    maxPoolSize: 10,
-    minPoolSize: 0,
-    retryWrites: true,
-    w: "majority",
-    tls: true,
-    tlsInsecure: false
   }
 });
 
@@ -86,7 +76,7 @@ passport.deserializeUser(User.deserializeUser());
 // Global middleware for templates and session management
 app.use((req, res, next) => {
   // current user available in templates
-  res.locals.currentUser = req.user;
+  res.locals.currentUser = req.user || null;
 
   // flash messages 
   res.locals.success = req.flash("success");
@@ -107,20 +97,8 @@ app.use("/", userRouter);
 
 // MongoDB Connection
 async function connectWithRetry() {
-  const options = {
-    serverSelectionTimeoutMS: 30000,
-    socketTimeoutMS: 45000,
-    maxPoolSize: 10,
-    minPoolSize: 0,
-    bufferCommands: false,
-    retryWrites: true,
-    w: "majority",
-    tls: true,
-    tlsInsecure: false
-  };
-
   try {
-    await mongoose.connect(dburl, options);
+    await mongoose.connect(dburl);
     console.log("MongoDB Connection Successful");
     return true;
   } catch (err) {

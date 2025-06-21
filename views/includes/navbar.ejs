@@ -24,7 +24,7 @@
 
         <div class="collapse navbar-collapse " id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto">
-                <%if(currentUser){%>
+                <%if(typeof currentUser !== 'undefined' && currentUser){%>
                     <li class="nav-item dropdown d-flex align-items-center justify-content-center ">
                         <div class="meow">
                             <button class="nav-link dropdown-toggle user-menu" data-bs-toggle="dropdown"

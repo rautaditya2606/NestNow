@@ -38,15 +38,18 @@
                 <label class="form-label text-luxury">
                   <i class="fas fa-image me-2"></i>Upload Image
                 </label>
-                <div class="input-group">
-                  <input type="file" class="form-control" name="image" id="imageUrl" onchange="updatePreview()">
-                  <button class="btn btn-outline-luxury" type="button" onclick="previewImage()">
-                    <i class="fas fa-eye me-1"></i>Preview
-                  </button>
-                </div>
-                <div class="mt-2 text-center d-none" id="imagePreview">
-                  <img src="" alt="Preview" class="img-fluid rounded" style="max-height: 200px">
-                </div>
+                <div id="dragDropContainer"></div>
+                <!-- Hidden file input for form submission -->
+                <input type="file" class="form-control" name="image" id="imageInput" accept="image/*" style="display: none;">
+                <!-- Show current image if exists -->
+                <% if (listing.image && listing.image.url) { %>
+                  <div class="mt-3">
+                    <label class="form-label text-muted">Current Image:</label>
+                    <div class="current-image-container">
+                      <img src="<%= listing.image.url %>" alt="Current listing image" class="img-fluid rounded" style="max-height: 200px; max-width: 300px;">
+                    </div>
+                  </div>
+                <% } %>
               </div>
 
               <!-- Price Input -->
@@ -92,6 +95,55 @@
     </div>
   </div>
   <script src="/js/darkMode.js"></script>
+  <script src="/js/dragDropUpload.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Initialize drag and drop upload for edit form
+      dragDropUpload = new DragDropUpload('dragDropContainer', {
+        maxFiles: 1,
+        maxSize: 5 * 1024 * 1024, // 5MB
+        onFileSelect: function(files) {
+          // Update the hidden file input for form submission
+          const imageInput = document.getElementById('imageInput');
+          if (files.length > 0) {
+            // Create a new FileList-like object
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(files[0]);
+            imageInput.files = dataTransfer.files;
+          } else {
+            imageInput.files = null;
+          }
+        }
+      });
+
+      // Form validation
+      const form = document.querySelector('.needs-validation');
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      });
+
+      // File input validation
+      const imageInput = document.getElementById('imageInput');
+      imageInput.addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
+
+        if (file) {
+          if (!allowedTypes.includes(file.type)) {
+            alert('Please upload only JPG, PNG, or WebP images.');
+            e.target.value = '';
+            dragDropUpload.clearAll();
+            return;
+          }
+        }
+      });
+    });
+  </script>
 
   <style>
     .text-luxury {
@@ -116,5 +168,19 @@
     .form-control:focus {
       border-color: #2563EB;
       box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+    }
+
+    .current-image-container {
+      border: 2px dashed #dee2e6;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      background: #f8f9fa;
+      margin-top: 0.5rem;
+    }
+
+    .current-image-container img {
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
   </style>

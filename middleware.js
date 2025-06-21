@@ -33,7 +33,7 @@ module.exports.isLoggedIn = (req, res, next) => {
         req.flash("error", "You must be signed in");
         return res.redirect("/login");
     }
-    res.locals.currUser = req.user;
+    res.locals.currentUser = req.user;
     next();
 };
 
