@@ -11,16 +11,47 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <form class="d-flex me-3" action="/search" method="GET">
-            <div class="input-group">
-                <input class="form-control" type="search" placeholder="Search listings..." name="q"
-                    value="<%= locals.searchQuery || '' %>" aria-label="Search">
-                <button class="btn btn-outline-dark" type="submit">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-        </form>
-
+        <!-- Enhanced Search Bar -->
+        <div class="search-container">
+            <form class="search-form" action="/search" method="GET">
+                <div class="search-input-group">
+                    <div class="search-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <input 
+                        class="search-input" 
+                        type="search" 
+                        placeholder="Search for luxury properties..." 
+                        name="q"
+                        value="<%= locals.searchQuery || '' %>" 
+                        aria-label="Search listings"
+                        autocomplete="off">
+                    <div class="search-actions">
+                        <button class="search-clear" type="button" style="display: none;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <button class="search-submit" type="submit">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- Search Suggestions (can be enhanced with JavaScript) -->
+                <div class="search-suggestions" style="display: none;">
+                    <div class="suggestion-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Luxury villas in Goa</span>
+                    </div>
+                    <div class="suggestion-item">
+                        <i class="fas fa-home"></i>
+                        <span>Beachfront properties</span>
+                    </div>
+                    <div class="suggestion-item">
+                        <i class="fas fa-mountain"></i>
+                        <span>Mountain retreats</span>
+                    </div>
+                </div>
+            </form>
+        </div>
 
         <div class="collapse navbar-collapse " id="navbarNavDropdown">
             <ul class="navbar-nav ms-auto">
@@ -69,12 +100,6 @@
                         </li>
                         <%}%>
                             <li class="nav-item">
-                                <a class="nav-link text-secondary" href="/listings/new">
-                                    <i class="fa-solid fa-plus"></i>
-                                    Add Nest
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="/"><i class="fas fa-home me-2"></i>Home</a>
                             </li>
                             <li class="nav-item">
@@ -95,6 +120,13 @@
         --luxury-gold: #D4AF37;
         --luxury-dark: #1C1C1C;
         --luxury-gradient: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+        --search-bg: #FFFFFF;
+        --search-border: #E1E5E9;
+        --search-focus: #D4AF37;
+        --search-text: #2C3E50;
+        --search-placeholder: #95A5A6;
+        --search-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        --search-shadow-focus: 0 4px 20px rgba(212, 175, 55, 0.15);
     }
 
     .navbar {
@@ -121,6 +153,190 @@
         font-weight: 700;
     }
 
+    /* Enhanced Search Bar Styles */
+    .search-container {
+        position: relative;
+        margin: 0 1rem;
+        min-width: 300px;
+        max-width: 500px;
+        flex: 1;
+    }
+
+    .search-form {
+        position: relative;
+        width: 100%;
+    }
+
+    .search-input-group {
+        position: relative;
+        display: flex;
+        align-items: center;
+        background: var(--search-bg);
+        border: 2px solid var(--search-border);
+        border-radius: 50px;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: var(--search-shadow);
+    }
+
+    .search-input-group:hover {
+        border-color: var(--search-focus);
+        box-shadow: var(--search-shadow-focus);
+        transform: translateY(-1px);
+    }
+
+    .search-input-group:focus-within {
+        border-color: var(--search-focus);
+        box-shadow: var(--search-shadow-focus);
+        transform: translateY(-2px);
+    }
+
+    .search-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        color: var(--search-placeholder);
+        margin-right: 0.75rem;
+        transition: color 0.3s ease;
+    }
+
+    .search-input-group:focus-within .search-icon {
+        color: var(--search-focus);
+    }
+
+    .search-input {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 0.95rem;
+        color: var(--search-text);
+        font-weight: 500;
+        padding: 0.5rem 0;
+        min-width: 0;
+    }
+
+    .search-input::placeholder {
+        color: var(--search-placeholder);
+        font-weight: 400;
+        transition: color 0.3s ease;
+    }
+
+    .search-input:focus::placeholder {
+        color: var(--search-focus);
+        opacity: 0.7;
+    }
+
+    .search-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-left: 0.5rem;
+    }
+
+    .search-clear,
+    .search-submit {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border: none;
+        border-radius: 50%;
+        background: transparent;
+        color: var(--search-placeholder);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+
+    .search-clear:hover {
+        background: rgba(231, 76, 60, 0.1);
+        color: #E74C3C;
+        transform: scale(1.1);
+    }
+
+    .search-submit {
+        background: var(--luxury-gradient);
+        color: white;
+        box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+    }
+
+    .search-submit:hover {
+        transform: translateX(2px) scale(1.05);
+        box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+    }
+
+    .search-submit:active {
+        transform: translateX(1px) scale(1.02);
+    }
+
+    /* Search Suggestions */
+    .search-suggestions {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        border: 1px solid var(--search-border);
+        margin-top: 0.5rem;
+        z-index: 1000;
+        overflow: hidden;
+        animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .suggestion-item {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border-bottom: 1px solid #F8F9FA;
+    }
+
+    .suggestion-item:last-child {
+        border-bottom: none;
+    }
+
+    .suggestion-item:hover {
+        background: var(--luxury-gradient);
+        color: white;
+        transform: translateX(5px);
+    }
+
+    .suggestion-item i {
+        margin-right: 0.75rem;
+        font-size: 0.9rem;
+        width: 16px;
+        text-align: center;
+    }
+
+    .suggestion-item span {
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+
+    /* Show clear button when input has value */
+    .search-input:not(:placeholder-shown) + .search-actions .search-clear {
+        display: flex !important;
+    }
+
+    /* Navbar Links */
     .nav-link {
         position: relative;
         padding: 0.5rem 1.2rem;
@@ -186,6 +402,52 @@
         transform: translateX(5px);
     }
 
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+        .search-container {
+            min-width: 250px;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .search-container {
+            order: 3;
+            width: 100%;
+            min-width: auto;
+            margin: 1rem 0;
+        }
+
+        .navbar-collapse {
+            order: 4;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .navbar {
+            padding: 0.5rem 1rem;
+        }
+
+        .search-container {
+            margin: 0.5rem 0;
+        }
+
+        .search-input-group {
+            border-radius: 25px;
+            padding: 0.4rem 0.8rem;
+        }
+
+        .search-input {
+            font-size: 0.9rem;
+        }
+
+        .search-clear,
+        .search-submit {
+            width: 28px;
+            height: 28px;
+            font-size: 0.8rem;
+        }
+    }
+
     @media (max-width: 576px) {
         .navbar {
             padding: 0.5rem 1rem;
@@ -199,255 +461,99 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
-        .nav-link::after {
-            display: none;
-        }
-
-        .nav-link:hover {
-            background: #f8f9fa;
-            border-radius: 8px;
-        }
-
-        .dropdown-menu {
-            box-shadow: none;
-            background: #f8f9fa;
-            margin-top: 0.5rem;
-            transform-origin: top;
-        }
-
-        .dropdown-item:hover {
-            transform: none;
-        }
-
-        .dropdown-menu {
-            position: static !important;
-            transform-origin: top !important;
-            width: 100%;
-            margin: 0.5rem 0;
-            padding: 0.8rem;
-            box-shadow: none;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .dropdown-menu.show {
-            transform: translateY(0) !important;
-            opacity: 1;
-        }
-
-        .nav-item.dropdown {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .dropdown-toggle::after {
-            float: right;
-            margin-top: 10px;
-        }
-
-        .user-menu {
-            width: 100%;
-            text-align: left;
-            padding: 0.8rem;
-        }
-    }
-
-    /* Touch-friendly styles */
-    @media (hover: none) {
-
-        .nav-link:active,
-        .dropdown-item:active {
-            background: #f8f9fa;
-        }
-
-        .nav-link,
-        .dropdown-item {
-            min-height: 44px;
-        }
-    }
-
-    .dark-mode-toggle {
-        display: flex;
-        align-items: center;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        padding: 0.5rem 1.2rem;
-        color: var(--luxury-dark);
-        font-weight: 500;
-        transition: all 0.3s ease;
-    }
-
-    .dark-mode-toggle:hover {
-        color: var(--luxury-gold);
-    }
-
-    .dark-mode-toggle i {
-        font-size: 1.1rem;
-        transition: transform 0.3s ease;
-    }
-
-    .dark-mode-toggle:hover i {
-        transform: rotate(-15deg);
-    }
-
-    @media (max-width: 576px) {
-        .dark-mode-toggle {
-            width: 100%;
-            justify-content: flex-start;
-            padding: 0.8rem 1rem;
-            border-radius: 8px;
-        }
-
-        .dark-mode-toggle:hover {
-            background: #f8f9fa;
-        }
-    }
-
-    .user-menu {
-        border: none;
-        background: transparent;
-        padding: 0.5rem 1rem;
-        color: var(--luxury-dark);
-        transition: all 0.3s ease;
-    }
-
-    .user-menu:hover {
-        color: var(--luxury-gold);
-    }
-
-    .dropdown-menu {
-        min-width: 240px;
-        padding: 0.8rem;
-        border: none;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        transform: translateY(10px);
-        opacity: 0;
-        transition: all 0.3s ease;
-    }
-
-    .dropdown-menu.show {
-        transform: translateY(0);
-        opacity: 1;
-    }
-
-    .user-email {
-        color: #6c757d;
-        font-size: 0.9rem;
-    }
-
-    .logout-link {
-        color: #dc3545;
-    }
-
-    .logout-link:hover {
-        background-color: rgba(220, 53, 69, 0.1);
-        color: #dc3545;
-    }
-
-    @media (max-width: 576px) {
-        .nav-item.dropdown {
-            width: 100%;
-        }
-
-        .user-menu {
-            width: 100%;
-            text-align: left;
-            padding: 0.8rem;
-            border-radius: 8px;
-        }
-
-        .dropdown-menu {
-            width: 100%;
-            margin-top: 0.5rem;
-            box-shadow: none;
-            background-color: #f8f9fa;
-        }
-
-        .dropdown-item {
-            padding: 0.8rem;
-            border-radius: 6px;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .navbar-collapse {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            bottom: 0;
-            width: 80%;
-            /* padding: 2rem 1rem; */
-            background: white;
-            transition: all 0.3s ease-in-out;
-            height: 100vh !important;
-            overflow-y: auto;
-            z-index: 1000;
-            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar-collapse.show {
-            right: 0;
-        }
-
-        .navbar-toggler {
-            z-index: 1001;
-        }
-
-        /* Backdrop overlay when menu is open */
-        .navbar-collapse::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* background: rgba(0,0,0,0.5); */
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: -1;
-        }
-
-        .navbar-collapse.show::before {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .navbar-nav {
-            margin-top: 2rem;
-        }
-
-        .nav-item {
+        .search-container {
             margin: 0.5rem 0;
         }
 
-        .nav-link {
-            padding: 1rem;
-            border-radius: 8px;
+        .search-input-group {
+            border-radius: 20px;
+            padding: 0.3rem 0.6rem;
         }
 
-        .dropdown-menu {
-            position: static !important;
-            width: 100%;
-            margin: 0.5rem 0;
-            background: #f8f9fa;
-            border-radius: 8px;
-            box-shadow: none;
+        .search-input {
+            font-size: 0.85rem;
         }
 
-        .navbar-brand {
-            font-size: 1.4rem;
+        .search-clear,
+        .search-submit {
+            width: 24px;
+            height: 24px;
+            font-size: 0.75rem;
         }
+    }
 
-        .navbar-brand img {
-            height: 35px;
+    /* Loading animation for search */
+    .search-input-group.searching {
+        animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+        0% {
+            box-shadow: var(--search-shadow-focus);
+        }
+        50% {
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25);
+        }
+        100% {
+            box-shadow: var(--search-shadow-focus);
         }
     }
 </style>
 
-<script src="/js/script.js"></script>
+<script>
+    // Enhanced search functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.querySelector('.search-input');
+        const searchClear = document.querySelector('.search-clear');
+        const searchSuggestions = document.querySelector('.search-suggestions');
+        const searchInputGroup = document.querySelector('.search-input-group');
+
+        // Show/hide clear button
+        searchInput.addEventListener('input', function() {
+            if (this.value.length > 0) {
+                searchClear.style.display = 'flex';
+            } else {
+                searchClear.style.display = 'none';
+            }
+        });
+
+        // Clear search input
+        searchClear.addEventListener('click', function() {
+            searchInput.value = '';
+            searchInput.focus();
+            searchClear.style.display = 'none';
+        });
+
+        // Show suggestions on focus (optional)
+        searchInput.addEventListener('focus', function() {
+            // Uncomment the next line to show suggestions on focus
+            // searchSuggestions.style.display = 'block';
+        });
+
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!searchInputGroup.contains(e.target)) {
+                searchSuggestions.style.display = 'none';
+            }
+        });
+
+        // Handle suggestion clicks
+        document.querySelectorAll('.suggestion-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const text = this.querySelector('span').textContent;
+                searchInput.value = text;
+                searchInput.focus();
+                searchSuggestions.style.display = 'none';
+                searchClear.style.display = 'flex';
+            });
+        });
+
+        // Add loading state on form submit
+        document.querySelector('.search-form').addEventListener('submit', function() {
+            searchInputGroup.classList.add('searching');
+            setTimeout(() => {
+                searchInputGroup.classList.remove('searching');
+            }, 1500);
+        });
+    });
 </script>
