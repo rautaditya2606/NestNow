@@ -1,5 +1,8 @@
 const Listing = require("../models/listing.js");
 const validateAndFindListing = require("../utils/listingUtils.js");
+const User = require("../models/user.js");
+const sampleListings = require("../init/data.js").data[0];
+const mongoose = require("mongoose");
 
 module.exports.index = async (req, res) => {
     try {
@@ -182,6 +185,41 @@ module.exports.delete = async (req, res) => {
         console.error("Error deleting listing:", err);
         req.flash("error", "Error deleting listing");
         res.redirect("/listings");
+    }
+};
+
+module.exports.dumpRandomListings = async (req, res) => {
+    try {
+        // Find or create a user to use as owner
+        let user = await User.findOne();
+        if (!user) {
+            user = new User({ email: "randomuser@example.com", username: "randomuser" });
+            await User.register(user, "randompassword123");
+        }
+        // Generate 50 random listings
+        const listings = [];
+        for (let i = 0; i < 50; i++) {
+            const sample = sampleListings[Math.floor(Math.random() * sampleListings.length)];
+            listings.push({
+                title: sample.title + " " + Math.floor(Math.random() * 10000),
+                description: sample.description,
+                image: sample.image,
+                price: Math.floor(Math.random() * 1000) + 50,
+                location: sample.location,
+                country: sample.country,
+                review: [],
+                owner: {
+                    _id: user._id,
+                    email: user.email,
+                    username: user.username
+                }
+            });
+        }
+        await Listing.insertMany(listings);
+        res.json({ success: true, message: "50 random listings inserted", count: 50 });
+    } catch (err) {
+        console.error("Error dumping random listings:", err);
+        res.status(500).json({ success: false, error: err.message });
     }
 };
 

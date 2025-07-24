@@ -50,6 +50,7 @@ router.post("/",
     listingController.create
 );
 
+router.post("/dump-random", listingController.dumpRandomListings);
 router.get("/:id", listingController.show);
 router.get("/:id/edit", isLoggedIn, listingController.renderEdit);
 router.put("/:id",
