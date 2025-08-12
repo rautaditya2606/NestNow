@@ -49,9 +49,17 @@ const imageUrls = [
     'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&h=600&fit=crop'
 ];
 
-// Generate random price between 50,000 and 5,00,00,000
+// Generate random price with realistic rental tiers
 function getRandomPrice() {
-    return Math.floor(Math.random() * (50000000 - 50000) + 50000);
+    const tiers = [
+        { min: 1000, max: 5000 },    // Budget (₹1K-5K)
+        { min: 5000, max: 15000 },   // Mid-range (₹5K-15K)
+        { min: 15000, max: 30000 },  // Premium (₹15K-30K)
+        { min: 30000, max: 50000 }   // Luxury (₹30K-50K)
+    ];
+    
+    const tier = tiers[Math.floor(Math.random() * tiers.length)];
+    return Math.floor(Math.random() * (tier.max - tier.min) + tier.min);
 }
 
 // Generate random element from array
