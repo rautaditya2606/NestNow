@@ -16,6 +16,7 @@ const Review = require("./models/review.js");
 const listingRouter = require("./router/listings.js");
 const reviewRouter = require("./router/review.js");
 const userRouter = require("./router/user.js");
+const seedRouter = require("./routes/seed.js");
 const session = require("express-session");
 const mongoStore = require("connect-mongo");
 const flash = require("connect-flash");
@@ -94,6 +95,7 @@ app.use((req, res, next) => {
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
+app.use("/api", seedRouter);
 
 // MongoDB Connection
 async function connectWithRetry() {
