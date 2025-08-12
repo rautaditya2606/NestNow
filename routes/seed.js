@@ -4,24 +4,55 @@ const Listing = require('../models/listing.js');
 const User = require('../models/user.js');
 
 // Sample data for generating realistic properties
-const cities = [
-    'Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 
-    'Kolkata', 'Pune', 'Ahmedabad', 'Jaipur', 'Surat',
-    'Lucknow', 'Kanpur', 'Nagpur', 'Indore', 'Thane',
-    'Bhopal', 'Visakhapatnam', 'Pimpri-Chinchwad', 'Patna', 'Vadodara'
-];
-
 const propertyTypes = [
     'Apartment', 'Villa', 'Independent House', 'Penthouse', 'Studio',
     '2BHK Flat', '3BHK Flat', '4BHK Flat', 'Duplex', 'Townhouse'
 ];
 
-const locations = [
-    'Andheri West', 'Bandra West', 'Juhu', 'Powai', 'Worli',
-    'Colaba', 'BKC', 'Lower Parel', 'Dadar West', 'Chembur',
-    'Vashi', 'Nerul', 'Belapur', 'Panvel', 'Kharghar',
-    'Thane West', 'Mulund West', 'Goregaon West', 'Malad West', 'Borivali West'
-];
+// Realistic city-location mappings
+const cityLocations = {
+    'Mumbai': [
+        'Bandra West', 'Andheri West', 'Juhu', 'Powai', 'Worli',
+        'Colaba', 'BKC', 'Lower Parel', 'Dadar West', 'Chembur',
+        'Goregaon West', 'Malad West', 'Borivali West', 'Mulund West'
+    ],
+    'Delhi': [
+        'Connaught Place', 'Hauz Khas', 'Dwarka', 'Vasant Vihar', 'Lajpat Nagar',
+        'Greater Kailash', 'Saket', 'Rohini', 'Pitampura', 'Janakpuri'
+    ],
+    'Bangalore': [
+        'Indiranagar', 'Koramangala', 'Whitefield', 'Electronic City', 'Marathahalli',
+        'HSR Layout', 'JP Nagar', 'Bannerghatta Road', 'Hebbal', 'Yelahanka'
+    ],
+    'Hyderabad': [
+        'Banjara Hills', 'Jubilee Hills', 'Gachibowli', 'Hitech City', 'Madhapur',
+        'Kondapur', 'Kukatpally', 'Secunderabad', 'Begumpet', 'Ameerpet'
+    ],
+    'Chennai': [
+        'T Nagar', 'Anna Nagar', 'Adyar', 'Mylapore', 'Velachery',
+        'OMR', 'Porur', 'Vadapalani', 'Kilpauk', 'Nungambakkam'
+    ],
+    'Pune': [
+        'Koregaon Park', 'Kalyani Nagar', 'Viman Nagar', 'Hinjewadi', 'Wakad',
+        'Baner', 'Aundh', 'Kharadi', 'Magarpatta', 'Hadapsar'
+    ],
+    'Kolkata': [
+        'Park Street', 'Salt Lake', 'New Town', 'Ballygunge', 'Alipore',
+        'Behala', 'Garia', 'Howrah', 'Dum Dum', 'Barrackpore'
+    ],
+    'Ahmedabad': [
+        'Satellite', 'Vastrapur', 'Navrangpura', 'Paldi', 'Bodakdev',
+        'Thaltej', 'Gujarat University', 'Law Garden', 'Ellis Bridge', 'Maninagar'
+    ],
+    'Jaipur': [
+        'C-Scheme', 'Malviya Nagar', 'Vaishali Nagar', 'Raja Park', 'Sindhi Camp',
+        'Bani Park', 'Mansarovar', 'Vidhyadhar Nagar', 'Tonk Road', 'Sanganer'
+    ],
+    'Surat': [
+        'Vesu', 'Adajan', 'Athwa', 'Piplod', 'Althan',
+        'City Light', 'Parle Point', 'Ghod Dod Road', 'Pal', 'Katargam'
+    ]
+};
 
 const descriptions = [
     'Beautiful modern apartment with stunning city views and premium amenities.',
@@ -69,8 +100,9 @@ function getRandomElement(array) {
 
 // Generate random property data
 function generatePropertyData(index) {
+    const cities = Object.keys(cityLocations);
     const city = getRandomElement(cities);
-    const location = getRandomElement(locations);
+    const location = getRandomElement(cityLocations[city]);
     const propertyType = getRandomElement(propertyTypes);
     const description = getRandomElement(descriptions);
     const imageUrl = getRandomElement(imageUrls);
